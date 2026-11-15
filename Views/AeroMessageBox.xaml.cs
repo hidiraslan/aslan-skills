@@ -43,7 +43,7 @@ namespace ClassicAeroStudio.Views
         public static AeroMessageBoxResult Show(
             Window? owner,
             string message,
-            string title = "Network Assistant",
+            string title = "Classic Aero UI Studio",
             string? header = null,
             AeroMessageBoxButton button = AeroMessageBoxButton.Ok,
             AeroMessageBoxIcon icon = AeroMessageBoxIcon.Information)
@@ -96,7 +96,7 @@ namespace ClassicAeroStudio.Views
             return msgBox.Result;
         }
 
-        public static AeroMessageBoxResult Show(string message, string title = "Network Assistant")
+        public static AeroMessageBoxResult Show(string message, string title = "Classic Aero UI Studio")
         {
             return Show(null, message, title, null, AeroMessageBoxButton.Ok, AeroMessageBoxIcon.Information);
         }

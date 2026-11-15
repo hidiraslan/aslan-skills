@@ -6,7 +6,7 @@
         xmlns:ctrl="clr-namespace:ClassicAeroStudio.Controls"
         mc:Ignorable="d"
         Title="Time Settings"
-        Icon="pack://application:,,,/Assets/app_icon.png"
+        Icon="pack://application:,,,/Assets/app_icon.ico"
         Height="510" Width="780"
         MinHeight="490" MinWidth="740"
         WindowStartupLocation="CenterOwner"

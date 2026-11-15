@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="About Classic Aero UI Studio"
-        Icon="pack://application:,,,/Assets/app_icon.png"
+        Icon="pack://application:,,,/Assets/app_icon.ico"
         Width="440" Height="250"
-        ResizeMode="NoResize"
+        ResizeMode="CanMinimize"
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource ClassicCanvasBackground}"
         FontFamily="Segoe UI, Tahoma, sans-serif"
@@ -33,10 +33,11 @@
             </Grid.ColumnDefinitions>
 
             <!-- App Logo Icon -->
-            <Rectangle Grid.Column="0" Width="42" Height="42"
-                       Fill="{DynamicResource IconAppLogo}"
-                       VerticalAlignment="Top"
-                       Margin="0,4,0,0"/>
+            <Image Grid.Column="0" Width="40" Height="40"
+                   Source="pack://application:,,,/Assets/app_icon.png"
+                   RenderOptions.BitmapScalingMode="HighQuality"
+                   VerticalAlignment="Top"
+                   Margin="0,4,0,0"/>
 
             <!-- Information Details -->
             <StackPanel Grid.Column="1" Margin="8,0,0,0">

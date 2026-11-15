@@ -168,7 +168,7 @@ namespace ClassicAeroStudio
                     }
                 }));
 
-            // Global Window Rule: Apply Immersive Dark Titlebar when Dark Theme is active
+            // Global Window Rule: Apply Immersive Dark Titlebar and ensure Application Icon
             EventManager.RegisterClassHandler(
                 typeof(Window),
                 FrameworkElement.LoadedEvent,
@@ -176,6 +176,22 @@ namespace ClassicAeroStudio
                 {
                     if (s is Window w)
                     {
+                        if (w.Icon == null)
+                        {
+                            try
+                            {
+                                w.Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Assets/app_icon.ico", UriKind.RelativeOrAbsolute));
+                            }
+                            catch
+                            {
+                                try
+                                {
+                                    w.Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Assets/app_icon.png", UriKind.RelativeOrAbsolute));
+                                }
+                                catch { }
+                            }
+                        }
+
                         ClassicAeroStudio.Services.ThemeManager.ApplyWindowTheme(
                             w,
                             ClassicAeroStudio.Services.ThemeManager.CurrentTheme == ClassicAeroStudio.Services.AppTheme.DarkAero);

@@ -6,7 +6,7 @@
         xmlns:ctrl="clr-namespace:ClassicAeroStudio.Controls"
         mc:Ignorable="d"
         Title="Classic Aero UI Studio — Windows Enterprise Design System"
-        Icon="pack://application:,,,/Assets/app_icon.png"
+        Icon="pack://application:,,,/Assets/app_icon.ico"
         Width="1100" Height="700"
         MinWidth="950" MinHeight="550"
         WindowStartupLocation="CenterScreen"

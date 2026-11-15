@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Settings &amp; Preferences (Tile Navigation View)"
-        Icon="pack://application:,,,/Assets/app_icon.png"
+        Icon="pack://application:,,,/Assets/app_icon.ico"
         Width="850" Height="516"
         MinWidth="750" MinHeight="460"
         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
