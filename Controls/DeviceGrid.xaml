@@ -3715,25 +3715,6 @@
                                         </Grid>
                                     </Border>
 
-                                    <!-- 4. SNMP -->
-                                    <Border Width="220" Height="78" BorderBrush="{DynamicResource ClassicBorderBrush}" BorderThickness="1" Background="{DynamicResource ClassicCardBackground}" CornerRadius="3" Margin="5" Padding="8,6">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="42"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Border Grid.Column="0" Background="{DynamicResource ClassicInnerBackground}" CornerRadius="3" Width="38" Height="38" VerticalAlignment="Center">
-                                                <Rectangle Width="26" Height="26" Fill="{DynamicResource IconSNMP}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                            <StackPanel Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Center">
-                                                <TextBlock Text="SNMP Protocol" FontFamily="Segoe UI" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource ClassicTextTitle}"/>
-                                                <Border Background="{DynamicResource ClassicSubHeaderBackground}" BorderBrush="{DynamicResource ClassicDividerBrush}" BorderThickness="1" CornerRadius="2" Padding="4,1" Margin="0,3,0,3" HorizontalAlignment="Left">
-                                                    <TextBlock Text="IconSNMP" FontFamily="Consolas" FontSize="10" Foreground="{DynamicResource ClassicSelectionBlue}"/>
-                                                </Border>
-                                                <TextBlock Text="SNMP v1/v2c/v3 ve MIB" FontFamily="Segoe UI" FontSize="10" Foreground="#777777"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
 
                                     <!-- 5. Firmware Upgrade -->
                                     <Border Width="220" Height="78" BorderBrush="{DynamicResource ClassicBorderBrush}" BorderThickness="1" Background="{DynamicResource ClassicCardBackground}" CornerRadius="3" Margin="5" Padding="8,6">

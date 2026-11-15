@@ -58,8 +58,6 @@ namespace ClassicAeroStudio.Views
         {
             if (ThemePillSwitch == null) return;
             bool isDark = (theme == ClassicAeroStudio.Services.AppTheme.DarkAero);
-            TxtThemeIcon.Text = isDark ? "☀️" : "🌙";
-            TxtThemeLabel.Text = isDark ? "Light Aero" : "Dark Aero";
             ThemePillSwitch.ToolTip = isDark
                 ? "Active: Dark Aero Mode (Click to switch to Classic Light Aero)"
                 : "Active: Classic Light Aero (Click to switch to Dark Aero)";

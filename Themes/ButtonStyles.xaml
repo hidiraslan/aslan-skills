@@ -206,35 +206,82 @@
         </Setter>
     </Style>
 
-    <!-- Classic Aero Theme Switch Pill Button -->
+    <!-- Classic Aero Theme Switch Pill Switch (Light Mode: Sun active on Left) -->
     <Style x:Key="ClassicThemeTogglePill" TargetType="Button">
+        <Setter Property="Width" Value="56"/>
         <Setter Property="Height" Value="22"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="True"/>
-        <Setter Property="Foreground" Value="#10253F"/>
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="border"
+                    <!-- 1. Outer Pill Track -->
+                    <Border x:Name="track"
+                            Width="56" Height="22"
+                            CornerRadius="11"
                             BorderBrush="#8AA7C6"
                             BorderThickness="1"
-                            CornerRadius="11"
-                            Padding="8,2">
+                            SnapsToDevicePixels="True">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Color="#FFFFFF" Offset="0.0"/>
-                                <GradientStop Color="#EAF2FA" Offset="0.45"/>
-                                <GradientStop Color="#D5E5F5" Offset="0.5"/>
-                                <GradientStop Color="#C5DBF0" Offset="1.0"/>
+                                <GradientStop Color="#CAD6E2" Offset="0.0"/>
+                                <GradientStop Color="#DBE5EE" Offset="0.4"/>
+                                <GradientStop Color="#E9F0F7" Offset="1.0"/>
                             </LinearGradientBrush>
                         </Border.Background>
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        <Grid>
+                            <!-- 2. Active Sliding Knob (Left: Sun active) -->
+                            <Border x:Name="knob"
+                                    Width="26" Height="18"
+                                    CornerRadius="9"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Margin="1,0,0,0"
+                                    BorderBrush="#779CBE"
+                                    BorderThickness="1"
+                                    SnapsToDevicePixels="True">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#FFFFFF" Offset="0.0"/>
+                                        <GradientStop Color="#F3F7FB" Offset="0.45"/>
+                                        <GradientStop Color="#DDE9F5" Offset="0.5"/>
+                                        <GradientStop Color="#CFE1F2" Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+
+                            <!-- 3. Two Slots Grid -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="28"/>
+                                    <ColumnDefinition Width="28"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Left Icon: Sun (Active, Warm Amber) -->
+                                <Canvas Grid.Column="0" Width="14" Height="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Ellipse Width="6" Height="6" Canvas.Left="4" Canvas.Top="4"
+                                             Fill="#FFB300" Stroke="#D97706" StrokeThickness="0.8"/>
+                                    <Path Stroke="#D97706" StrokeThickness="1.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                          Data="M 7,0.5 L 7,2.5 M 7,11.5 L 7,13.5 M 0.5,7 L 2.5,7 M 11.5,7 L 13.5,7 M 2.4,2.4 L 3.8,3.8 M 10.2,10.2 L 11.6,11.6 M 2.4,11.6 L 3.8,10.2 M 10.2,3.8 L 11.6,2.4"/>
+                                </Canvas>
+
+                                <!-- Right Icon: Moon (Inactive, Muted Slate) -->
+                                <Path Grid.Column="1" Width="11" Height="11" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Stretch="Uniform"
+                                      Data="M 9,1 A 5.5,5.5 0 1 0 9,11 A 4.2,4.2 0 0 1 9,1 Z"
+                                      Fill="#7C93AA" Stroke="#677E95" StrokeThickness="0.6"/>
+                            </Grid>
+                        </Grid>
                     </Border>
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="#3C7FB1"/>
-                            <Setter TargetName="border" Property="Background">
+                            <Setter TargetName="track" Property="BorderBrush" Value="#4C8BC5"/>
+                            <Setter TargetName="knob" Property="BorderBrush" Value="#3C7FB1"/>
+                            <Setter TargetName="knob" Property="Background">
                                 <Setter.Value>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                         <GradientStop Color="#FFFFFF" Offset="0.0"/>
@@ -246,8 +293,8 @@
                             </Setter>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="#1F5B8B"/>
-                            <Setter TargetName="border" Property="Background">
+                            <Setter TargetName="knob" Property="BorderBrush" Value="#1F5B8B"/>
+                            <Setter TargetName="knob" Property="Background">
                                 <Setter.Value>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                         <GradientStop Color="#C0DAF3" Offset="0.0"/>
