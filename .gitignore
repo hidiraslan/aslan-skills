@@ -15,7 +15,7 @@
 
 ## Temporary & Scratch Files
 scratch/
-screenshot_*.png
+/screenshot_*.png
 *.tmp
 *.log
 
