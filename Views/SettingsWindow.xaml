@@ -1,0 +1,672 @@
+<Window x:Class="ClassicAeroStudio.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Settings"
+        Icon="pack://application:,,,/Assets/app_icon.png"
+        Width="780" Height="530"
+        MinWidth="720" MinHeight="480"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ClassicCanvasBackground}"
+        FontFamily="Segoe UI, Tahoma, sans-serif"
+        FontSize="11"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        TextOptions.TextHintingMode="Fixed"
+        RenderOptions.ClearTypeHint="Enabled">
+
+    <Window.Resources>
+        <!-- Classic Windows 7 Sidebar Item Style -->
+        <Style x:Key="ClassicSidebarListBoxItem" TargetType="ListBoxItem">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="{DynamicResource ClassicTextTitle}"/>
+            <Setter Property="TextElement.Foreground" Value="{DynamicResource ClassicTextTitle}"/>
+            <Setter Property="Margin" Value="3,1,3,1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="itemBorder"
+                                CornerRadius="2"
+                                BorderThickness="1"
+                                BorderBrush="Transparent"
+                                Background="Transparent"
+                                Padding="8,0,8,0"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Hover state -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsSelected" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="itemBorder" Property="Background" Value="{DynamicResource ClassicSidebarHoverBrush}"/>
+                                <Setter TargetName="itemBorder" Property="BorderBrush" Value="{DynamicResource ClassicSidebarHoverBorderBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource ClassicTextTitle}"/>
+                                <Setter Property="TextElement.Foreground" Value="{DynamicResource ClassicTextTitle}"/>
+                            </MultiTrigger>
+                            <!-- Selected state (Classic Windows 7 Royal Blue) -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="itemBorder" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#1A84E3" Offset="0.0"/>
+                                            <GradientStop Color="#0B6EC6" Offset="1.0"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="itemBorder" Property="BorderBrush" Value="#095AA5"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter Property="TextElement.Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Hidden TabItem template for switching pages via Sidebar -->
+        <Style x:Key="CollapsedTabItemStyle" TargetType="TabItem">
+            <Setter Property="Visibility" Value="Collapsed"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- Top Subtitle Header -->
+            <RowDefinition Height="Auto"/>
+            <!-- Main Content Area: Sidebar + Settings Page -->
+            <RowDefinition Height="*"/>
+            <!-- Bottom Action Buttons Bar -->
+            <RowDefinition Height="42"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top Title Bar Banner -->
+        <Border Grid.Row="0"
+                Background="{DynamicResource ClassicSubHeaderBackground}"
+                BorderBrush="{DynamicResource ClassicDividerBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="16,10,16,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Rectangle Grid.Column="0" Width="20" Height="20"
+                           Fill="{DynamicResource IconSettings}"
+                           Margin="0,0,10,0"
+                           VerticalAlignment="Center"/>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="Application &amp; Discovery Preferences"
+                               FontFamily="Segoe UI, Tahoma, sans-serif"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                    <TextBlock Text="Configure discovery protocols, alarm notification rules, credentials, and interface options."
+                               FontFamily="Segoe UI, Tahoma, sans-serif"
+                               FontSize="10.5"
+                               Foreground="{DynamicResource ClassicTextSubtitle}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Body: Sidebar + Detail Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <!-- Left Sidebar -->
+                <ColumnDefinition Width="205"/>
+                <!-- Right Page Content -->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Navigation Sidebar -->
+            <Border Grid.Column="0"
+                    Background="{DynamicResource ClassicInnerBackground}"
+                    BorderBrush="{DynamicResource ClassicBorderBrush}"
+                    BorderThickness="0,0,1,0"
+                    Padding="4,8,4,8">
+                <ListBox x:Name="SidebarListBox"
+                         SelectedIndex="0"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         ItemContainerStyle="{StaticResource ClassicSidebarListBoxItem}">
+                    
+                    <!-- 1. General Settings -->
+                    <ListBoxItem IsSelected="True">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="16" Height="16"
+                                       Fill="{DynamicResource IconGeneral}"
+                                       Margin="0,0,8,0"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="General Settings"
+                                       FontFamily="Segoe UI, Tahoma, sans-serif"
+                                       FontSize="11"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ListBoxItem>
+
+                    <!-- 2. Device Discovery -->
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="16" Height="16"
+                                       Fill="{DynamicResource IconDiscovery}"
+                                       Margin="0,0,8,0"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="Device Discovery"
+                                       FontFamily="Segoe UI, Tahoma, sans-serif"
+                                       FontSize="11"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ListBoxItem>
+
+                    <!-- 3. Alarms & Alerts -->
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="16" Height="16"
+                                       Fill="{DynamicResource IconAlerts}"
+                                       Margin="0,0,8,0"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="Alarms &amp; Notifications"
+                                       FontFamily="Segoe UI, Tahoma, sans-serif"
+                                       FontSize="11"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ListBoxItem>
+
+                    <!-- 4. Security & Authentication -->
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="16" Height="16"
+                                       Fill="{DynamicResource IconSecurity}"
+                                       Margin="0,0,8,0"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="Security &amp; Auth"
+                                       FontFamily="Segoe UI, Tahoma, sans-serif"
+                                       FontSize="11"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ListBoxItem>
+
+                    <!-- 5. Backup & Storage -->
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="16" Height="16"
+                                       Fill="{DynamicResource IconBackupRestore}"
+                                       Margin="0,0,8,0"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="Backup &amp; Storage"
+                                       FontFamily="Segoe UI, Tahoma, sans-serif"
+                                       FontSize="11"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ListBoxItem>
+
+                    <!-- 6. Display & Interface -->
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="16" Height="16"
+                                       Fill="{DynamicResource IconDisplay}"
+                                       Margin="0,0,8,0"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="Display &amp; Language"
+                                       FontFamily="Segoe UI, Tahoma, sans-serif"
+                                       FontSize="11"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
+            </Border>
+
+            <!-- Right Content Host Panel -->
+            <Border Grid.Column="1"
+                    Background="{DynamicResource ClassicCardBackground}"
+                    Padding="14,10,14,10">
+                <TabControl SelectedIndex="{Binding SelectedIndex, ElementName=SidebarListBox}"
+                            BorderThickness="0"
+                            Padding="0"
+                            Background="Transparent">
+                    <TabControl.ItemContainerStyle>
+                        <Style TargetType="TabItem">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </Style>
+                    </TabControl.ItemContainerStyle>
+
+                    <!-- ================= PAGE 1: GENERAL SETTINGS ================= -->
+                    <TabItem>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel>
+                                <!-- Startup & Behavior GroupBox -->
+                                <GroupBox Header="Application Startup &amp; Behavior" Style="{StaticResource ClassicGroupBox}">
+                                    <StackPanel Margin="6,4">
+                                        <CheckBox Content="Start Network Device Assistant automatically when Windows logs on"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,0,0,6"/>
+                                        <CheckBox Content="Minimize application to Windows Notification Area (System Tray)"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,0,0,6"/>
+                                        <CheckBox Content="Automatically check for software and firmware updates on launch"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,0,0,6"/>
+                                        <CheckBox Content="Enforce single-instance application execution"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"/>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <!-- Logging & Diagnostics GroupBox -->
+                                <GroupBox Header="Logging &amp; Diagnostic Traces" Style="{StaticResource ClassicGroupBox}">
+                                    <Grid Margin="6,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="26"/>
+                                            <RowDefinition Height="26"/>
+                                            <RowDefinition Height="24"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Logging Level:" VerticalAlignment="Center"/>
+                                        <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ClassicComboBox}" SelectedIndex="0">
+                                            <ComboBoxItem Content="Information (Standard Operational Logs)"/>
+                                            <ComboBoxItem Content="Debug &amp; Diagnostic Protocol Tracing"/>
+                                            <ComboBoxItem Content="Warnings and Errors Only"/>
+                                        </ComboBox>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Log Directory:" VerticalAlignment="Center"/>
+                                        <Grid Grid.Row="1" Grid.Column="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Column="0" Text="C:\ProgramData\NetworkAssistant\Logs\" Style="{StaticResource ClassicTextBox}"/>
+                                            <Button Grid.Column="1" Content="Browse..." Style="{StaticResource ClassicStandardButton}" Margin="6,0,0,0" Padding="8,1"/>
+                                        </Grid>
+
+                                        <CheckBox Grid.Row="2" Grid.Column="1"
+                                                  Content="Automatically archive log files older than 30 days"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,4,0,0"/>
+                                    </Grid>
+                                </GroupBox>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <!-- ================= PAGE 2: DEVICE DISCOVERY ================= -->
+                    <TabItem>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel>
+                                <!-- Discovery Protocols GroupBox -->
+                                <GroupBox Header="Discovery Protocols &amp; Broadcast Settings" Style="{StaticResource ClassicGroupBox}">
+                                    <StackPanel Margin="6,4">
+                                        <CheckBox Content="Enable D-Link Discovery Protocol (DDP v1 / v2 Broadcast)"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,0,0,6"/>
+                                        <CheckBox Content="Enable Universal Plug and Play (UPnP / SSDP) Multicast Detection"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,0,0,6"/>
+                                        <CheckBox Content="Enable Link Layer Discovery Protocol (LLDP 802.1AB) Snooping"
+                                                  IsChecked="False"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,0,0,6"/>
+                                        <CheckBox Content="Scan all active network adapters (Ethernet, Wi-Fi, Virtual Interfaces)"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"/>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <!-- Scan Timing & Subnets GroupBox -->
+                                <GroupBox Header="Scan Intervals &amp; Subnet Targets" Style="{StaticResource ClassicGroupBox}">
+                                    <Grid Margin="6,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="140"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="26"/>
+                                            <RowDefinition Height="26"/>
+                                            <RowDefinition Height="26"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Broadcast Refresh Rate:" VerticalAlignment="Center"/>
+                                        <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ClassicComboBox}" SelectedIndex="1">
+                                            <ComboBoxItem Content="15 seconds (High Frequency)"/>
+                                            <ComboBoxItem Content="30 seconds (Default Recommended)"/>
+                                            <ComboBoxItem Content="60 seconds (Conserve Bandwidth)"/>
+                                            <ComboBoxItem Content="Manual Refresh Only"/>
+                                        </ComboBox>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Device Timeout:" VerticalAlignment="Center"/>
+                                        <ComboBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ClassicComboBox}" SelectedIndex="0">
+                                            <ComboBoxItem Content="90 seconds (Mark Offline after 3 missed hellos)"/>
+                                            <ComboBoxItem Content="180 seconds"/>
+                                            <ComboBoxItem Content="300 seconds"/>
+                                        </ComboBox>
+
+                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="IP Scan Subnet Range:" VerticalAlignment="Center"/>
+                                        <TextBox Grid.Row="2" Grid.Column="1" Text="192.168.1.1 - 192.168.1.254" Style="{StaticResource ClassicTextBox}"/>
+                                    </Grid>
+                                </GroupBox>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <!-- ================= PAGE 3: ALARMS & NOTIFICATIONS ================= -->
+                    <TabItem>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel>
+                                <!-- Alarm Trigger Conditions -->
+                                <GroupBox Header="Alarm Event Triggers" Style="{StaticResource ClassicGroupBox}">
+                                    <StackPanel Margin="6,4">
+                                        <CheckBox Content="Trigger alarm when device status transitions from Online to Offline"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,0,0,6"/>
+                                        <CheckBox Content="Trigger alarm when IP address conflict or duplicate MAC is detected"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,0,0,6"/>
+                                        <CheckBox Content="Trigger alarm when firmware checksum verification fails during flash"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,0,0,6"/>
+                                        <CheckBox Content="Trigger alarm on unauthorized configuration or password modification"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"/>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <!-- Notification Methods -->
+                                <GroupBox Header="Notification Actions" Style="{StaticResource ClassicGroupBox}">
+                                    <Grid Margin="6,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="130"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="20"/>
+                                            <ColumnDefinition Width="60"/>
+                                            <ColumnDefinition Width="60"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="24"/>
+                                            <RowDefinition Height="24"/>
+                                            <RowDefinition Height="26"/>
+                                        </Grid.RowDefinitions>
+
+                                        <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+                                                  Content="Show Windows Balloon / Action Center pop-up alert notifications"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"/>
+
+                                        <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5"
+                                                  Content="Play classic Windows default sound chime on Critical severity alarm"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"/>
+
+                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Remote Syslog Server:" VerticalAlignment="Center"/>
+                                        <TextBox Grid.Row="2" Grid.Column="1" Text="192.168.1.250" Style="{StaticResource ClassicTextBox}"/>
+                                        <TextBlock Grid.Row="2" Grid.Column="3" Text="Port:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                        <TextBox Grid.Row="2" Grid.Column="4" Text="514" Style="{StaticResource ClassicTextBox}"/>
+                                    </Grid>
+                                </GroupBox>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <!-- ================= PAGE 4: SECURITY & AUTH ================= -->
+                    <TabItem>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel>
+                                <!-- Default Device Credentials -->
+                                <GroupBox Header="Default Device Administrative Credentials" Style="{StaticResource ClassicGroupBox}">
+                                    <Grid Margin="6,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="26"/>
+                                            <RowDefinition Height="26"/>
+                                            <RowDefinition Height="24"/>
+                                            <RowDefinition Height="24"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Default Username:" VerticalAlignment="Center"/>
+                                        <TextBox Grid.Row="0" Grid.Column="1" Text="admin" Style="{StaticResource ClassicTextBox}"/>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Default Password:" VerticalAlignment="Center"/>
+                                        <PasswordBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ClassicPasswordBox}"/>
+
+                                        <CheckBox Grid.Row="2" Grid.Column="1"
+                                                  Content="Remember authentication credentials securely across sessions"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,4,0,0"/>
+
+                                        <CheckBox Grid.Row="3" Grid.Column="1"
+                                                  Content="Always prompt for administrator confirmation before Reboot or Factory Reset"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"/>
+                                    </Grid>
+                                </GroupBox>
+
+                                <!-- SNMP Security Settings -->
+                                <GroupBox Header="SNMP Community &amp; Security Defaults" Style="{StaticResource ClassicGroupBox}">
+                                    <Grid Margin="6,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="26"/>
+                                            <RowDefinition Height="26"/>
+                                            <RowDefinition Height="26"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Read Community:" VerticalAlignment="Center"/>
+                                        <TextBox Grid.Row="0" Grid.Column="1" Text="public" Style="{StaticResource ClassicTextBox}"/>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Write Community:" VerticalAlignment="Center"/>
+                                        <TextBox Grid.Row="1" Grid.Column="1" Text="private" Style="{StaticResource ClassicTextBox}"/>
+
+                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Default Version:" VerticalAlignment="Center"/>
+                                        <ComboBox Grid.Row="2" Grid.Column="1" Style="{StaticResource ClassicComboBox}" SelectedIndex="1">
+                                            <ComboBoxItem Content="SNMP v1 (Legacy)"/>
+                                            <ComboBoxItem Content="SNMP v2c (Community Based - Standard)"/>
+                                            <ComboBoxItem Content="SNMP v3 (User Security Model / SHA / AES)"/>
+                                        </ComboBox>
+                                    </Grid>
+                                </GroupBox>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <!-- ================= PAGE 5: BACKUP & STORAGE ================= -->
+                    <TabItem>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel>
+                                <GroupBox Header="Configuration Backup Repository" Style="{StaticResource ClassicGroupBox}">
+                                    <Grid Margin="6,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="26"/>
+                                            <RowDefinition Height="24"/>
+                                            <RowDefinition Height="24"/>
+                                            <RowDefinition Height="26"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Backup Directory:" VerticalAlignment="Center"/>
+                                        <Grid Grid.Row="0" Grid.Column="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Column="0" Text="C:\NetworkBackups\SwitchConfigs\" Style="{StaticResource ClassicTextBox}"/>
+                                            <Button Grid.Column="1" Content="Browse..." Style="{StaticResource ClassicStandardButton}" Margin="6,0,0,0" Padding="8,1"/>
+                                        </Grid>
+
+                                        <CheckBox Grid.Row="1" Grid.Column="1"
+                                                  Content="Automatically append ISO 8601 timestamp to saved backup files"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,4,0,0"/>
+
+                                        <CheckBox Grid.Row="2" Grid.Column="1"
+                                                  Content="Encrypt stored configuration backups with AES-256 standard"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"/>
+
+                                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Automated Schedule:" VerticalAlignment="Center"/>
+                                        <ComboBox Grid.Row="3" Grid.Column="1" Style="{StaticResource ClassicComboBox}" SelectedIndex="1">
+                                            <ComboBoxItem Content="Disabled (Manual Backups Only)"/>
+                                            <ComboBoxItem Content="Daily Automated Backup (00:00 UTC)"/>
+                                            <ComboBoxItem Content="Weekly on Sunday"/>
+                                        </ComboBox>
+                                    </Grid>
+                                </GroupBox>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <!-- ================= PAGE 6: DISPLAY & LANGUAGE ================= -->
+                    <TabItem>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel>
+                                <!-- Theme Selection GroupBox -->
+                                <GroupBox Header="Aero Visual Theme &amp; Style" Style="{StaticResource ClassicGroupBox}" Margin="0,0,0,10">
+                                    <Grid Margin="6,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="140"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Active Aero Theme:" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                        <ComboBox x:Name="ThemeComboBox"
+                                                  Grid.Row="0" Grid.Column="1"
+                                                  Style="{StaticResource ClassicComboBox}"
+                                                  SelectionChanged="OnThemeComboBoxSelectionChanged">
+                                            <ComboBoxItem Content="Classic Aero Light (Windows 7 Saydam Cam &amp; Mavi)"/>
+                                            <ComboBoxItem Content="Dark Aero (Obsidian &amp; Gece Saydam Cam)"/>
+                                        </ComboBox>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                                   Text="Active theme dynamically styles all windows, tables, controls, sidebars, and dialog components in real time."
+                                                   FontFamily="Segoe UI" FontSize="10" Foreground="{DynamicResource ClassicTextSubtitle}"
+                                                   TextWrapping="Wrap" Margin="0,4,0,2"/>
+                                    </Grid>
+                                </GroupBox>
+
+                                <GroupBox Header="Interface Display &amp; Visual Options" Style="{StaticResource ClassicGroupBox}">
+                                    <StackPanel Margin="6,4">
+                                        <CheckBox Content="Show high-visibility status LED indicators in device grid"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,0,0,6"/>
+                                        <CheckBox Content="Automatically resize grid column widths to fit content on refresh"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,0,0,6"/>
+                                        <CheckBox Content="Show IPv6 network column in primary device list"
+                                                  IsChecked="True"
+                                                  Style="{StaticResource ClassicCheckBox}"
+                                                  Margin="0,0,0,6"/>
+                                        <CheckBox Content="Enable classic Windows 7 ClearType subpixel text rendering"
+                                                  IsChecked="True"
+                                                  IsEnabled="False"
+                                                  Style="{StaticResource ClassicCheckBox}"/>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <GroupBox Header="Language &amp; Region Settings" Style="{StaticResource ClassicGroupBox}">
+                                    <Grid Margin="6,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="130"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="26"/>
+                                            <RowDefinition Height="26"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Interface Language:" VerticalAlignment="Center"/>
+                                        <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ClassicComboBox}" SelectedIndex="0">
+                                            <ComboBoxItem Content="English (United States)"/>
+                                            <ComboBoxItem Content="Turkish"/>
+                                            <ComboBoxItem Content="Deutsch (German)"/>
+                                            <ComboBoxItem Content="French"/>
+                                        </ComboBox>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="UI Scaling Preference:" VerticalAlignment="Center"/>
+                                        <ComboBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ClassicComboBox}" SelectedIndex="0">
+                                            <ComboBoxItem Content="100% (Standard 11pt Display Alignment)"/>
+                                            <ComboBoxItem Content="115% (Enlarged)"/>
+                                            <ComboBoxItem Content="125% (High DPI)"/>
+                                        </ComboBox>
+                                    </Grid>
+                                </GroupBox>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+
+                </TabControl>
+            </Border>
+        </Grid>
+
+        <!-- Bottom Action Bar -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource ClassicCanvasBackground}"
+                BorderBrush="{DynamicResource ClassicDividerBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="14,0,14,0">
+            <Grid VerticalAlignment="Center">
+                <!-- Left: Restore Defaults Button -->
+                <Button Content="Restore Defaults"
+                        Style="{StaticResource ClassicStandardButton}"
+                        HorizontalAlignment="Left"
+                        Width="110"
+                        Click="OnCloseClicked"/>
+
+                <!-- Right: OK, Cancel, Apply Buttons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="OK"
+                            Style="{StaticResource ClassicDefaultButton}"
+                            Width="75"
+                            Click="OnCloseClicked"
+                            Margin="0,0,8,0"/>
+                    <Button Content="Cancel"
+                            Style="{StaticResource ClassicStandardButton}"
+                            Width="75"
+                            Click="OnCloseClicked"
+                            Margin="0,0,8,0"/>
+                    <Button Content="Apply"
+                            Style="{StaticResource ClassicStandardButton}"
+                            Width="75"
+                            Click="OnCloseClicked"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

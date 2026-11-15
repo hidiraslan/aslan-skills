@@ -1,0 +1,80 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Classic Windows 7 GroupBox Style -->
+    <Style x:Key="ClassicGroupBox" TargetType="GroupBox">
+        <Setter Property="FontFamily" Value="Segoe UI, Tahoma, sans-serif"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Foreground" Value="#1E395B"/>
+        <Setter Property="BorderBrush" Value="#C2D1E4"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="10,8,10,8"/>
+        <Setter Property="Margin" Value="0,0,0,8"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GroupBox">
+                    <Grid SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Top row: Left line segment, Header with TRANSPARENT background, Right line segment -->
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Left corner & short top line before header -->
+                            <Border Grid.Column="0"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="1,1,0,0"
+                                    CornerRadius="2,0,0,0"
+                                    Margin="0,7,0,0"
+                                    SnapsToDevicePixels="True"
+                                    UseLayoutRounding="True"/>
+
+                            <!-- Header content: 100% TRANSPARENT background, NO line behind it! -->
+                            <Border Grid.Column="1"
+                                    Padding="4,0,4,0"
+                                    Background="Transparent"
+                                    VerticalAlignment="Center"
+                                    SnapsToDevicePixels="True"
+                                    UseLayoutRounding="True">
+                                <ContentPresenter ContentSource="Header"
+                                                  RecognizesAccessKey="True"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
+
+                            <!-- Right top line & right corner after header -->
+                            <Border Grid.Column="2"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="0,1,1,0"
+                                    CornerRadius="0,2,0,0"
+                                    Margin="0,7,0,0"
+                                    SnapsToDevicePixels="True"
+                                    UseLayoutRounding="True"/>
+                        </Grid>
+
+                        <!-- Bottom row: Left border, Bottom border, Right border + Inner Content -->
+                        <Border Grid.Row="1"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1,0,1,1"
+                                CornerRadius="0,0,2,2"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="True"
+                                UseLayoutRounding="True">
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

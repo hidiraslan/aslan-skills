@@ -1,0 +1,182 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Assets/Icons/ClassicIcons.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/ButtonStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/DataGridStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/TabStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/ToolbarStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/GroupBoxStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/TextBoxStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/ComboBoxStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/RadioButtonStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/SliderProgressBarStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/TreeViewStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/ScrollBarStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/MenuStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/ExtendedControlsStyles.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- Classic Windows Palette & Brushes -->
+    <SolidColorBrush x:Key="ClassicWindowBackground" Color="#EDF2F8"/>
+    <SolidColorBrush x:Key="ClassicCanvasBackground" Color="#F4F6F9"/>
+    <SolidColorBrush x:Key="ClassicCardBackground" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ClassicInnerBackground" Color="#F8FAFD"/>
+    <SolidColorBrush x:Key="ClassicRibbonBackground" Color="#D6E2F0"/>
+    <SolidColorBrush x:Key="ClassicSubHeaderBackground" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ClassicDividerBrush" Color="#D0DFEE"/>
+    <SolidColorBrush x:Key="ClassicBorderBrush" Color="#A0B4D0"/>
+    <SolidColorBrush x:Key="ClassicControlBorderBrush" Color="#8EA6C1"/>
+    <SolidColorBrush x:Key="ClassicTextPrimary" Color="#1E395B"/>
+    <SolidColorBrush x:Key="ClassicTextTitle" Color="#1E395B"/>
+    <SolidColorBrush x:Key="ClassicTextBody" Color="#000000"/>
+    <SolidColorBrush x:Key="ClassicTextSubtitle" Color="#6B88A4"/>
+    <SolidColorBrush x:Key="ClassicTextDark" Color="#000000"/>
+    <SolidColorBrush x:Key="ClassicTextMuted" Color="#556677"/>
+    <SolidColorBrush x:Key="ClassicSelectionBlue" Color="#0B75D4"/>
+    <SolidColorBrush x:Key="ClassicGridLineVertical" Color="#C2D3E4"/>
+    <SolidColorBrush x:Key="ClassicGridLineHorizontal" Color="#E1EBF4"/>
+    <SolidColorBrush x:Key="ClassicSidebarHoverBorderBrush" Color="#B8D6F3"/>
+    <LinearGradientBrush x:Key="ClassicSidebarHoverBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#FFFFFF" Offset="0"/>
+        <GradientStop Color="#EDF4FC" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- DataGrid Column Header Gradients -->
+    <LinearGradientBrush x:Key="ClassicColumnHeaderBackground" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#FFFFFF" Offset="0.0"/>
+        <GradientStop Color="#F3F7FA" Offset="0.4"/>
+        <GradientStop Color="#E4ECF5" Offset="0.41"/>
+        <GradientStop Color="#DDE7F2" Offset="1.0"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ClassicColumnHeaderHoverBackground" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#FFFFFF" Offset="0.0"/>
+        <GradientStop Color="#EEF6FD" Offset="0.4"/>
+        <GradientStop Color="#DCECFB" Offset="0.41"/>
+        <GradientStop Color="#C8E2FA" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <!-- System Badges Brushes -->
+    <SolidColorBrush x:Key="ClassicBadgeCriticalBackground" Color="#FDEBEB"/>
+    <SolidColorBrush x:Key="ClassicBadgeCriticalBorder" Color="#D97575"/>
+    <SolidColorBrush x:Key="ClassicBadgeCriticalForeground" Color="#B80E0E"/>
+    <SolidColorBrush x:Key="ClassicBadgeWarningBackground" Color="#FFF6E0"/>
+    <SolidColorBrush x:Key="ClassicBadgeWarningBorder" Color="#E0AF4C"/>
+    <SolidColorBrush x:Key="ClassicBadgeWarningForeground" Color="#9E5900"/>
+    <SolidColorBrush x:Key="ClassicBadgeInfoBackground" Color="#EAF3FD"/>
+    <SolidColorBrush x:Key="ClassicBadgeInfoBorder" Color="#77AADB"/>
+    <SolidColorBrush x:Key="ClassicBadgeInfoForeground" Color="#0C579E"/>
+    <SolidColorBrush x:Key="ClassicBadgeSuccessBackground" Color="#EBF9EF"/>
+    <SolidColorBrush x:Key="ClassicBadgeSuccessBorder" Color="#74C48E"/>
+    <SolidColorBrush x:Key="ClassicBadgeSuccessForeground" Color="#167A32"/>
+
+    <!-- Wizard Header Brushes -->
+    <LinearGradientBrush x:Key="ClassicWizardActiveBackground" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#E4EFFD" Offset="0.0"/>
+        <GradientStop Color="#C9DFF9" Offset="1.0"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="ClassicWizardInactiveBackground" Color="#ECEFF3"/>
+    <SolidColorBrush x:Key="ClassicWizardActiveBorder" Color="#A4C1E4"/>
+    <SolidColorBrush x:Key="ClassicWizardInactiveBorder" Color="#B0C4DE"/>
+    <SolidColorBrush x:Key="ClassicWizardActiveBadge" Color="#1867B8"/>
+    <SolidColorBrush x:Key="ClassicWizardInactiveBadge" Color="#909AA8"/>
+    <SolidColorBrush x:Key="ClassicWizardActiveForeground" Color="#135299"/>
+    <SolidColorBrush x:Key="ClassicWizardInactiveForeground" Color="#556677"/>
+
+    <!-- Target vs. Actual Delivery (Bullet Chart) Brushes -->
+    <SolidColorBrush x:Key="ClassicBulletRange1" Color="#E2E7ED"/>
+    <SolidColorBrush x:Key="ClassicBulletRange2" Color="#D0DBE8"/>
+    <SolidColorBrush x:Key="ClassicBulletRange3" Color="#BDCFE4"/>
+    <SolidColorBrush x:Key="ClassicBulletBorder" Color="#A6BCCC"/>
+    <SolidColorBrush x:Key="ClassicBulletBarPrimary" Color="#1D65AB"/>
+    <SolidColorBrush x:Key="ClassicBulletBarSuccess" Color="#287D28"/>
+    <SolidColorBrush x:Key="ClassicBulletMarkerWarning" Color="#D9381E"/>
+    <SolidColorBrush x:Key="ClassicBulletMarkerStandard" Color="#1E395B"/>
+
+    <!-- Code Editor Syntax Highlighting Brushes (IDE Multi-Doc Shell) -->
+    <SolidColorBrush x:Key="ClassicCodeGutterBackground" Color="#F2F5F9"/>
+    <SolidColorBrush x:Key="ClassicCodeGutterForeground" Color="#5C7A99"/>
+    <SolidColorBrush x:Key="ClassicCodeEditorBackground" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ClassicCodeKeyword" Color="#0000FF"/>
+    <SolidColorBrush x:Key="ClassicCodeKeywordAlt" Color="#AF00DB"/>
+    <SolidColorBrush x:Key="ClassicCodeFunction" Color="#795E26"/>
+    <SolidColorBrush x:Key="ClassicCodeString" Color="#A31515"/>
+    <SolidColorBrush x:Key="ClassicCodeComment" Color="#008000"/>
+    <SolidColorBrush x:Key="ClassicCodeNumber" Color="#098658"/>
+    <SolidColorBrush x:Key="ClassicCodeIdentifier" Color="#001080"/>
+    <SolidColorBrush x:Key="ClassicCodeProperty" Color="#0451A5"/>
+
+    <!-- Subtle Window Title Bar Gradient (Aero-like top header) -->
+    <LinearGradientBrush x:Key="ClassicTitleBarBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#CADCEE" Offset="0.0"/>
+        <GradientStop Color="#B4CDE6" Offset="0.5"/>
+        <GradientStop Color="#9EBEDF" Offset="0.51"/>
+        <GradientStop Color="#8BAED5" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <!-- Classic Status Bar Style -->
+    <Style x:Key="ClassicStatusBar" TargetType="StatusBar">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Foreground" Value="#223344"/>
+        <Setter Property="Height" Value="22"/>
+        <Setter Property="BorderThickness" Value="0,1,0,0"/>
+        <Setter Property="BorderBrush" Value="#C2D3E5"/>
+        <Setter Property="Padding" Value="4,0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#F4F8FC" Offset="0.0"/>
+                    <GradientStop Color="#E6EFF8" Offset="0.5"/>
+                    <GradientStop Color="#D8E5F3" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Status Bar Item Separator -->
+    <Style x:Key="ClassicStatusBarSeparator" TargetType="Separator">
+        <Setter Property="Width" Value="2"/>
+        <Setter Property="Height" Value="14"/>
+        <Setter Property="Margin" Value="6,0,6,0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Separator">
+                    <Grid Width="2">
+                        <Rectangle Width="1" HorizontalAlignment="Left" Fill="#B5C6DA"/>
+                        <Rectangle Width="1" HorizontalAlignment="Right" Fill="#FFFFFF"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ============================================================= -->
+    <!-- DEFAULT IMPLICIT STYLES FOR ZERO-CONFIGURATION REUSE         -->
+    <!-- When ClassicWindowsTheme.xaml is merged in App.xaml, all      -->
+    <!-- standard controls automatically adopt Windows 7 Aero styling. -->
+    <!-- ============================================================= -->
+    <Style TargetType="Button" BasedOn="{StaticResource ClassicStandardButton}"/>
+    <Style TargetType="TextBox" BasedOn="{StaticResource ClassicTextBox}"/>
+    <Style TargetType="PasswordBox" BasedOn="{StaticResource ClassicPasswordBox}"/>
+    <Style TargetType="ComboBox" BasedOn="{StaticResource ClassicComboBox}"/>
+    <Style TargetType="CheckBox" BasedOn="{StaticResource ClassicCheckBox}"/>
+    <Style TargetType="RadioButton" BasedOn="{StaticResource ClassicRadioButton}"/>
+    <Style TargetType="GroupBox" BasedOn="{StaticResource ClassicGroupBox}"/>
+    <Style TargetType="DataGrid" BasedOn="{StaticResource ClassicDataGrid}"/>
+    <Style TargetType="TreeView" BasedOn="{StaticResource ClassicTreeView}"/>
+    <Style TargetType="ProgressBar" BasedOn="{StaticResource ClassicProgressBar}"/>
+    <Style TargetType="Slider" BasedOn="{StaticResource ClassicSlider}"/>
+    <Style TargetType="StatusBar" BasedOn="{StaticResource ClassicStatusBar}"/>
+    <Style TargetType="ScrollBar" BasedOn="{StaticResource ClassicScrollBar}"/>
+    <Style TargetType="ContextMenu" BasedOn="{StaticResource ClassicContextMenu}"/>
+    <Style TargetType="MenuItem" BasedOn="{StaticResource ClassicMenuItem}"/>
+    <Style TargetType="ListBox" BasedOn="{StaticResource ClassicListBox}"/>
+    <Style TargetType="ListBoxItem" BasedOn="{StaticResource ClassicListBoxItem}"/>
+    <Style TargetType="Expander" BasedOn="{StaticResource ClassicExpander}"/>
+    <Style TargetType="DatePicker" BasedOn="{StaticResource ClassicDatePicker}"/>
+
+</ResourceDictionary>

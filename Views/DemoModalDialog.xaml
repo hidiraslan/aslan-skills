@@ -1,0 +1,199 @@
+<Window x:Class="ClassicAeroStudio.Views.DemoModalDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Enterprise Component Showcase - Interactive Modal"
+        Icon="pack://application:,,,/Assets/app_icon.png"
+        Height="570" Width="600"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Background="{DynamicResource ClassicCanvasBackground}"
+        FontFamily="Segoe UI, Tahoma, sans-serif"
+        FontSize="11"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- 1. Upper Content Area -->
+            <RowDefinition Height="*"/>
+            <!-- 2. Command Button Footer Bar -->
+            <RowDefinition Height="46"/>
+        </Grid.RowDefinitions>
+
+        <!-- 1. Upper Content -->
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="16,14,16,10">
+            <StackPanel>
+                <!-- Header with Icon & Subtitle -->
+                <Grid Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="38"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Rectangle Grid.Column="0"
+                               Width="30" Height="30"
+                               Fill="{DynamicResource IconDeviceSettings}"
+                               VerticalAlignment="Top"
+                               Margin="0,2,0,0"/>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="Interactive Modal &amp; UI Components Showcase"
+                                   FontFamily="Segoe UI"
+                                   FontSize="13"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource ClassicTextTitle}"/>
+                        <TextBlock Text="This modal showcases live interactive controls: Sliders, ColorPicker, NumericUpDown, Spinners and Tooltips."
+                                   FontFamily="Segoe UI"
+                                   FontSize="11"
+                                   Foreground="{DynamicResource ClassicTextSubtitle}"
+                                   Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Notification Banner Card -->
+                <Border BorderBrush="{DynamicResource ClassicBadgeInfoBorder}"
+                        BorderThickness="1"
+                        Background="{DynamicResource ClassicBadgeInfoBackground}"
+                        CornerRadius="2"
+                        Padding="10,8"
+                        Margin="0,0,0,14">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="0" Width="16" Height="16" Fill="{DynamicResource IconAlarmInfo}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1"
+                                   Text="Notice: Changes made in this demonstration dialog are applied live to the preview canvas below."
+                                   FontFamily="Segoe UI"
+                                   FontSize="11"
+                                   Foreground="{DynamicResource ClassicBadgeInfoForeground}"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- 1. Sliders & Numeric Controls -->
+                <GroupBox Header="Numeric Stepper, Sliders &amp; Spinner" Style="{DynamicResource ClassicGroupBox}" Margin="0,0,0,12">
+                    <Grid Margin="6,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28"/>
+                            <RowDefinition Height="28"/>
+                            <RowDefinition Height="28"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Port MTU Stepper -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="MTU Size (Bytes):" VerticalAlignment="Center" Foreground="{DynamicResource ClassicTextTitle}"/>
+                        <Border Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Width="105" Height="22" BorderBrush="{DynamicResource ClassicControlBorderBrush}" BorderThickness="1" CornerRadius="1" Background="{DynamicResource ClassicCardBackground}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="18"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="MtuBox" Text="1500" BorderThickness="0" Background="Transparent" Foreground="{DynamicResource ClassicTextTitle}" VerticalAlignment="Center" VerticalContentAlignment="Center" Padding="4,0" FontFamily="Segoe UI" FontSize="11"/>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="10"/>
+                                        <RowDefinition Height="10"/>
+                                    </Grid.RowDefinitions>
+                                    <Button Grid.Row="0" Style="{StaticResource ClassicNumericSpinnerButton}" BorderThickness="1,0,0,1" BorderBrush="{DynamicResource ClassicControlBorderBrush}" Click="OnMtuUpClicked">
+                                        <Path Data="M 0,3.5 L 3.5,0 L 7,3.5 Z" Fill="{DynamicResource ClassicTextTitle}" SnapsToDevicePixels="True"/>
+                                    </Button>
+                                    <Button Grid.Row="1" Style="{StaticResource ClassicNumericSpinnerButton}" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource ClassicControlBorderBrush}" Click="OnMtuDownClicked">
+                                        <Path Data="M 0,0 L 3.5,3.5 L 7,0 Z" Fill="{DynamicResource ClassicTextTitle}" SnapsToDevicePixels="True"/>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="[ 64 - 9216 ]" Foreground="{DynamicResource ClassicTextMuted}" VerticalAlignment="Center" Margin="6,0,0,0"/>
+
+                        <!-- Bandwidth Slider -->
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Bandwidth Throttle:" VerticalAlignment="Center" Foreground="{DynamicResource ClassicTextTitle}"/>
+                        <Slider x:Name="BandwidthSlider" Grid.Row="1" Grid.Column="1" Minimum="10" Maximum="1000" Value="250" VerticalAlignment="Center" TickFrequency="100" IsSnapToTickEnabled="False"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Value, ElementName=BandwidthSlider, StringFormat={}{0:0} Mbps}" FontWeight="SemiBold" Foreground="{DynamicResource ClassicTextTitle}" VerticalAlignment="Center" Margin="6,0,0,0"/>
+
+                        <!-- PoE Power Limit Slider -->
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="PoE Port Budget:" VerticalAlignment="Center" Foreground="{DynamicResource ClassicTextTitle}"/>
+                        <Slider x:Name="PoeSlider" Grid.Row="2" Grid.Column="1" Minimum="0" Maximum="30" Value="15.4" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Value, ElementName=PoeSlider, StringFormat={}{0:0.0} W (PoE+)}" Foreground="{DynamicResource ClassicTextTitle}" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                    </Grid>
+                </GroupBox>
+
+                <!-- 2. ColorPicker Swatches & DatePicker -->
+                <GroupBox Header="Color Picker &amp; Date Selection" Style="{DynamicResource ClassicGroupBox}" Margin="0,0,0,12">
+                    <Grid Margin="6,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Color Swatches -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="VLAN Topology Color:" VerticalAlignment="Center" Foreground="{DynamicResource ClassicTextTitle}"/>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <RadioButton Style="{StaticResource ClassicRadioButton}" Content="Blue" IsChecked="True" Margin="0,0,8,0"/>
+                            <RadioButton Style="{StaticResource ClassicRadioButton}" Content="Green" Margin="0,0,8,0"/>
+                            <RadioButton Style="{StaticResource ClassicRadioButton}" Content="Amber" Margin="0,0,8,0"/>
+                            <RadioButton Style="{StaticResource ClassicRadioButton}" Content="Red" Margin="0,0,8,0"/>
+                            <Border Width="20" Height="20" Background="#1867BA" BorderBrush="#0C3D70" BorderThickness="1" CornerRadius="2" Margin="10,0,0,0" ToolTip="Active Palette Preview: Aero Blue (#1867BA)"/>
+                        </StackPanel>
+
+                        <!-- DatePicker -->
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Maintenance Date:" VerticalAlignment="Center" Foreground="{DynamicResource ClassicTextTitle}"/>
+                        <DatePicker Grid.Row="1" Grid.Column="1" Width="150" Height="22" HorizontalAlignment="Left" VerticalAlignment="Center" SelectedDate="2026-09-28"/>
+                    </Grid>
+                </GroupBox>
+
+                <!-- 3. Toggles & Checkboxes -->
+                <GroupBox Header="Switches, Toggles &amp; Tooltips" Style="{DynamicResource ClassicGroupBox}">
+                    <StackPanel Margin="6,6">
+                        <CheckBox Content="Enable Hardware Flow Control (802.3x PAUSE Frames)"
+                                  Style="{DynamicResource ClassicToggleSwitch}"
+                                  IsChecked="True"
+                                  Margin="0,2,0,6"
+                                  ToolTip="When enabled, prevents packet loss during buffer congestion."/>
+                        <CheckBox Content="Enable Jumbo Frames (Supports packets up to 9216 bytes)"
+                                  Style="{DynamicResource ClassicToggleSwitch}"
+                                  IsChecked="True"
+                                  Margin="0,2,0,6"
+                                  ToolTip="Optimizes high-throughput NAS and iSCSI SAN storage transfers."/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- 2. Footer Action Bar (Windows 7 Task Dialog Gray) -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource ClassicCanvasBackground}"
+                BorderBrush="{DynamicResource ClassicDividerBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="16,0"
+                Height="46"
+                SnapsToDevicePixels="True">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button Content="Apply Parameters"
+                        Style="{DynamicResource ClassicDefaultButton}"
+                        IsDefault="True"
+                        Width="110" Height="24"
+                        Margin="0,0,8,0"
+                        Click="OnApplyClicked"/>
+
+                <Button Content="Close"
+                        Style="{DynamicResource ClassicStandardButton}"
+                        IsCancel="True"
+                        Width="75" Height="24"
+                        Click="OnCloseClicked"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

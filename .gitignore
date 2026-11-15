@@ -1,0 +1,29 @@
+## Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## Visual Studio & Rider
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.ide/
+.idea/
+
+## Temporary & Scratch Files
+scratch/
+screenshot_*.png
+*.tmp
+*.log
+
+## Windows Local Shortcuts
+*.lnk
+
+## OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/

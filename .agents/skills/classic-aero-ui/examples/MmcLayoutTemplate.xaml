@@ -1,0 +1,250 @@
+<Window x:Class="ClassicAeroStudio.Views.MmcLayoutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Management Console (MMC) Shell — Switch Infrastructure Root"
+        Icon="pack://application:,,,/Assets/app_icon.png"
+        Height="550" Width="860"
+        MinHeight="460" MinWidth="720"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ClassicCanvasBackground}"
+        FontFamily="Segoe UI, Tahoma, sans-serif"
+        FontSize="11"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        TextOptions.TextHintingMode="Fixed"
+        RenderOptions.ClearTypeHint="Enabled">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- 1. Console Menu Bar -->
+            <RowDefinition Height="22"/>
+            <!-- 2. Action Toolbar Strip -->
+            <RowDefinition Height="28"/>
+            <!-- 3. Main Work Area (Left Scope Tree + Right Details/Actions) -->
+            <RowDefinition Height="*"/>
+            <!-- 4. Status Bar -->
+            <RowDefinition Height="22"/>
+        </Grid.RowDefinitions>
+
+        <!-- Row 0: Console Menu Bar -->
+        <Menu Grid.Row="0" Style="{DynamicResource ClassicMenu}">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Options..."/>
+                <Separator Style="{DynamicResource ClassicMenuSeparator}"/>
+                <MenuItem Header="_Exit" Click="OnCloseClicked"/>
+            </MenuItem>
+            <MenuItem Header="_Action">
+                <MenuItem Header="_Connect to Device..."/>
+                <MenuItem Header="_Export List..."/>
+                <Separator Style="{DynamicResource ClassicMenuSeparator}"/>
+                <MenuItem Header="_Properties"/>
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="_Scope Pane" IsChecked="True"/>
+                <MenuItem Header="_Action Pane" IsChecked="True"/>
+                <Separator Style="{DynamicResource ClassicMenuSeparator}"/>
+                <MenuItem Header="_Refresh" InputGestureText="F5"/>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_Help Topics"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Row 1: Action Toolbar Strip -->
+        <Border Grid.Row="1" Background="{DynamicResource ClassicSubHeaderBackground}" BorderBrush="{DynamicResource ClassicDividerBrush}" BorderThickness="0,1,0,1" SnapsToDevicePixels="True">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="6,0,6,0">
+                <Button Style="{DynamicResource ClassicToolbarButton}" Height="22" Padding="6,1" Margin="0,0,4,0" ToolTip="Add New Node">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="13" Height="13" Fill="{DynamicResource IconDeviceSettings}" Margin="0,0,4,0"/>
+                        <TextBlock Text="Add Device"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{DynamicResource ClassicToolbarButton}" Height="22" Padding="6,1" Margin="0,0,4,0" ToolTip="Yenile (F5)">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="13" Height="13" Fill="{DynamicResource IconRefresh}" Margin="0,0,4,0"/>
+                        <TextBlock Text="Refresh"/>
+                    </StackPanel>
+                </Button>
+                <Separator Style="{DynamicResource ClassicMenuSeparator}" Margin="2,2,4,2"/>
+                <Button Style="{DynamicResource ClassicToolbarButton}" Height="22" Padding="6,1" Margin="0,0,4,0" ToolTip="SNMP Sorgusu">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="13" Height="13" Fill="{DynamicResource IconSNMP}" Margin="0,0,4,0"/>
+                        <TextBlock Text="Poll SNMP"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{DynamicResource ClassicToolbarButton}" Height="22" Padding="6,1" Margin="0,0,4,0" ToolTip="Run Diagnostics">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="13" Height="13" Fill="{DynamicResource IconRun}" Margin="0,0,4,0"/>
+                        <TextBlock Text="Run Diagnostics"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <!-- Row 2: Main Split Work Area -->
+        <Grid Grid.Row="2" Background="{DynamicResource ClassicCardBackground}">
+            <Grid.ColumnDefinitions>
+                <!-- Left: Scope Tree (Hierarchy) -->
+                <ColumnDefinition Width="220" MinWidth="160"/>
+                <ColumnDefinition Width="4"/>
+                <!-- Center: Result List / DataGrid -->
+                <ColumnDefinition Width="*" MinWidth="300"/>
+                <ColumnDefinition Width="4"/>
+                <!-- Right: Action Pane (Action Drawer) -->
+                <ColumnDefinition Width="180" MinWidth="140"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Column 0: Scope Tree Pane -->
+            <Border Grid.Column="0" Background="{DynamicResource ClassicInnerBackground}" BorderBrush="{DynamicResource ClassicDividerBrush}" BorderThickness="0,0,1,0" SnapsToDevicePixels="True">
+                <DockPanel>
+                    <!-- Scope Header -->
+                    <Border DockPanel.Dock="Top" Background="{DynamicResource ClassicSubHeaderBackground}" BorderBrush="{DynamicResource ClassicDividerBrush}" BorderThickness="0,0,0,1" Padding="8,4">
+                        <TextBlock Text="Console Root (Scope)" FontFamily="Segoe UI" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource ClassicTextTitle}"/>
+                    </Border>
+                    <TreeView Style="{DynamicResource ClassicTreeView}" Margin="4" BorderThickness="0" Background="Transparent">
+                        <TreeViewItem Header="Infrastructure Root" IsExpanded="True">
+                            <TreeViewItem Header="Core Distribution (10G)" IsSelected="True">
+                                <TreeViewItem Header="Core-Switch-01"/>
+                                <TreeViewItem Header="Core-Switch-02 (Standby)"/>
+                            </TreeViewItem>
+                            <TreeViewItem Header="Access Layer (Floor 1-4)" IsExpanded="True">
+                                <TreeViewItem Header="Edge-SW-Floor1"/>
+                                <TreeViewItem Header="Edge-SW-Floor2"/>
+                            </TreeViewItem>
+                            <TreeViewItem Header="Services &amp; Gateways">
+                                <TreeViewItem Header="Border-Firewall"/>
+                                <TreeViewItem Header="VPN-Concentrator"/>
+                            </TreeViewItem>
+                        </TreeViewItem>
+                    </TreeView>
+                </DockPanel>
+            </Border>
+
+            <!-- Splitter 1 -->
+            <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Stretch" Background="{DynamicResource ClassicDividerBrush}" ResizeBehavior="PreviousAndNext"/>
+
+            <!-- Column 2: Result Pane (DataGrid with selected node items) -->
+            <DockPanel Grid.Column="2">
+                <!-- Sub-Header Bar (34px standard) -->
+                <Border DockPanel.Dock="Top" Height="34" Background="{DynamicResource ClassicSubHeaderBackground}" BorderBrush="{DynamicResource ClassicDividerBrush}" BorderThickness="0,0,0,1" Padding="10,0">
+                    <Grid VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="Core Distribution (10G)" FontFamily="Segoe UI" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource ClassicTextTitle}"/>
+                            <TextBlock Text="— 3 Managed Nodes Online" FontFamily="Segoe UI" FontSize="11" Foreground="{DynamicResource ClassicTextSubtitle}" Margin="6,0,0,0"/>
+                        </StackPanel>
+                        <TextBox Grid.Column="1" Style="{DynamicResource ClassicSearchBox}" Width="140" Tag="Filter list..."/>
+                    </Grid>
+                </Border>
+
+                <!-- DataGrid -->
+                <DataGrid x:Name="MmcDataGrid"
+                          Style="{DynamicResource ClassicDataGrid}"
+                          AutoGenerateColumns="False"
+                          CanUserResizeColumns="True"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="All"
+                          VerticalGridLinesBrush="{DynamicResource ClassicGridLineVertical}"
+                          HorizontalGridLinesBrush="{DynamicResource ClassicGridLineHorizontal}"
+                          RowHeight="24"
+                          Background="{DynamicResource ClassicCardBackground}"
+                          BorderThickness="0">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="32" Header="" CellStyle="{DynamicResource ClassicDataGridCellCentered}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Rectangle Width="10" Height="10" Fill="{DynamicResource IconStatusOnline}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn Header="Node Name" Width="130" Binding="{Binding NodeName}"/>
+                        <DataGridTextColumn Header="IP Address" Width="110" Binding="{Binding IpAddress}"/>
+                        <DataGridTextColumn Header="Firmware" Width="80" Binding="{Binding Firmware}"/>
+                        <DataGridTextColumn Header="Uptime" Width="90" Binding="{Binding Uptime}"/>
+                        <DataGridTextColumn Header="CPU Load" Width="70" Binding="{Binding Cpu}"/>
+                        <DataGridTextColumn Header="Role" Width="*" Binding="{Binding Role}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+
+            <!-- Splitter 2 -->
+            <GridSplitter Grid.Column="3" Width="4" HorizontalAlignment="Stretch" Background="{DynamicResource ClassicDividerBrush}" ResizeBehavior="PreviousAndNext"/>
+
+            <!-- Column 4: Right Actions Pane (Windows MMC Standard) -->
+            <Border Grid.Column="4" Background="{DynamicResource ClassicInnerBackground}" BorderBrush="{DynamicResource ClassicDividerBrush}" BorderThickness="1,0,0,0" SnapsToDevicePixels="True">
+                <DockPanel>
+                    <!-- Action Pane Header -->
+                    <Border DockPanel.Dock="Top" Background="{DynamicResource ClassicSubHeaderBackground}" BorderBrush="{DynamicResource ClassicDividerBrush}" BorderThickness="0,0,0,1" Padding="8,4">
+                        <TextBlock Text="Actions" FontFamily="Segoe UI" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource ClassicTextTitle}"/>
+                    </Border>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" PanningMode="Both" Padding="8">
+                        <StackPanel>
+                            <!-- Group 1: Node Tasks -->
+                            <TextBlock Text="NODE TASKS" FontFamily="Segoe UI" FontSize="9.5" FontWeight="SemiBold" Foreground="{DynamicResource ClassicTextSubtitle}" Margin="0,4,0,4"/>
+                            
+                            <Button Style="{DynamicResource ClassicStandardButton}" Height="24" HorizontalContentAlignment="Left" Padding="6,1" Margin="0,0,0,4">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="13" Height="13" Fill="{DynamicResource IconSettings}" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Manage Node..."/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Style="{DynamicResource ClassicStandardButton}" Height="24" HorizontalContentAlignment="Left" Padding="6,1" Margin="0,0,0,4">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="13" Height="13" Fill="{DynamicResource IconTerminal}" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Open CLI Shell"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Style="{DynamicResource ClassicStandardButton}" Height="24" HorizontalContentAlignment="Left" Padding="6,1" Margin="0,0,0,4">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="13" Height="13" Fill="{DynamicResource IconRefresh}" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Re-Sync State"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Separator Style="{DynamicResource ClassicMenuSeparator}" Margin="0,6,0,8"/>
+
+                            <!-- Group 2: Advanced Options -->
+                            <TextBlock Text="ADVANCED" FontFamily="Segoe UI" FontSize="9.5" FontWeight="SemiBold" Foreground="{DynamicResource ClassicTextSubtitle}" Margin="0,0,0,4"/>
+
+                            <Button Style="{DynamicResource ClassicStandardButton}" Height="24" HorizontalContentAlignment="Left" Padding="6,1" Margin="0,0,0,4">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="13" Height="13" Fill="{DynamicResource IconSecurity}" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Security Audit..."/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Style="{DynamicResource ClassicStandardButton}" Height="24" HorizontalContentAlignment="Left" Padding="6,1" Margin="0,0,0,4">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="13" Height="13" Fill="{DynamicResource IconExportLog}" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Export Audit CSV"/>
+                                </StackPanel>
+                            </Button>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+
+        </Grid>
+
+        <!-- Row 3: Status Bar -->
+        <StatusBar Grid.Row="3" Style="{DynamicResource ClassicStatusBar}">
+            <StatusBarItem>
+                <TextBlock Text="Core Distribution Cluster — Status: Normal"/>
+            </StatusBarItem>
+            <Separator Style="{DynamicResource ClassicStatusBarSeparator}"/>
+            <StatusBarItem>
+                <TextBlock Text="All 3 supervisors in sync"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

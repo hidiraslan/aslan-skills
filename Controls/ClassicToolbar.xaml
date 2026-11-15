@@ -1,0 +1,273 @@
+<UserControl x:Class="ClassicAeroStudio.Controls.ClassicToolbar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="70" d:DesignWidth="700">
+    <Border Style="{DynamicResource ClassicRibbonBandStyle}" Height="72" Padding="6,3,6,5" SnapsToDevicePixels="True" UseLayoutRounding="True">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            
+            <!-- 1. Form Dialogs -->
+            <Button x:Name="BtnDeviceSettings"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    Click="OnDeviceSettingsClicked"
+                    ToolTip="Aero Modal &amp; Form Dialog Components">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconDeviceSettings}"/>
+                    <TextBlock Text="Form&#x0a;Dialogs"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 2. Input Controls -->
+            <Button x:Name="BtnChangePassword"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    Click="OnInputControlsClicked"
+                    ToolTip="Text inputs, password boxes &amp; validation styles">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconChangePassword}"/>
+                    <TextBlock Text="Input&#x0a;Controls"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 3. Wizard Stepper -->
+            <Button x:Name="BtnTimeSettings"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    Click="OnTimeSettingsClicked"
+                    ToolTip="Multi-Step Aero Wizard Flow">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconTimeSettings}"/>
+                    <TextBlock Text="Wizard&#x0a;Stepper"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 4. Code Studio (Replaced SNMP) -->
+            <Button x:Name="BtnStudio"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    Click="OnStudioClicked"
+                    ToolTip="Multi-Document Code &amp; Scripting Studio Shell">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconCode}"/>
+                    <TextBlock Text="Code&#x0a;Studio"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Group Separator -->
+            <Separator Style="{DynamicResource RibbonGroupSeparator}"/>
+
+            <!-- 5. Progress Bars -->
+            <Button x:Name="BtnFirmwareUpgrade"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    Click="OnProgressBarsClicked"
+                    ToolTip="Smooth and continuous Aero progress bars">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconFirmwareUpgrade}"/>
+                    <TextBlock Text="Progress&#x0a;Bars"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 6. Split Menus -->
+            <Button x:Name="BtnBackupRestore"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    Click="OnSplitMenuClicked"
+                    ToolTip="Split buttons and context dropdown menus">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconBackupRestore}"/>
+                    <TextBlock Text="Split&#x0a;Menus"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Group Separator -->
+            <Separator Style="{DynamicResource RibbonGroupSeparator}"/>
+
+            <!-- 7. Action Buttons -->
+            <Button x:Name="BtnReboot"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    Click="OnRebootClicked"
+                    ToolTip="Default, hover, pressed and disabled button states">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconReboot}"/>
+                    <TextBlock Text="Action&#x0a;Buttons"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 8. Alert Dialogs -->
+            <Button x:Name="BtnReset"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    Click="OnAlertDialogClicked"
+                    ToolTip="Aero confirmation and alert dialog styles">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconReset}"/>
+                    <TextBlock Text="Alert&#x0a;Dialogs"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Group Separator -->
+            <Separator Style="{DynamicResource RibbonGroupSeparator}"/>
+
+            <!-- 9. Data Filter -->
+            <Button x:Name="BtnPingTool"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    Click="OnPingClicked"
+                    ToolTip="Search, live filter and grid query controls">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconSearch}"/>
+                    <TextBlock Text="Data&#x0a;Filter"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 10. Aero Toggle Button -->
+            <ToggleButton x:Name="ToggleAutoRefresh"
+                          Style="{DynamicResource ClassicRibbonToggleButton}"
+                          ToolTip="Aero toggle buttons and checkable states">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconRefresh}"/>
+                    <TextBlock Text="Aero&#x0a;Toggle"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </ToggleButton>
+
+            <!-- Group Separator -->
+            <Separator Style="{DynamicResource RibbonGroupSeparator}"/>
+
+            <!-- 11. Stacked Mini-Buttons (Demonstrating compact ribbon actions) -->
+            <StackPanel VerticalAlignment="Center" Margin="2,0,2,0">
+                <Button Style="{DynamicResource ClassicRibbonMiniButton}"
+                        ToolTip="Select All Network Devices in Grid">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Rectangle Width="12" Height="12" Fill="{DynamicResource IconStatusOnline}" Margin="0,0,4,0"/>
+                        <TextBlock Text="Select All" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{DynamicResource ClassicRibbonMiniButton}"
+                        ToolTip="Clear Current Device Selection">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Rectangle Width="12" Height="12" Fill="{DynamicResource IconReset}" Margin="0,0,4,0"/>
+                        <TextBlock Text="Clear Selection" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <!-- Group Separator -->
+            <Separator Style="{DynamicResource RibbonGroupSeparator}"/>
+
+            <!-- 12. Settings (List Mode) -->
+            <Button x:Name="BtnSettings"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    Click="OnSettingsClicked"
+                    ToolTip="Classic 180px sidebar list navigation (Default Standard)">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconSettings}"/>
+                    <TextBlock Text="List&#x0a;Settings"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 13. Tile Settings (Square Tile Mode) -->
+            <Button x:Name="BtnTileSettings"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    Click="OnTileSettingsClicked"
+                    ToolTip="Square tile sidebar navigation (Optional Mode)">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconDisplay}"/>
+                    <TextBlock Text="Tile&#x0a;Settings"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+    </Border>
+</UserControl>

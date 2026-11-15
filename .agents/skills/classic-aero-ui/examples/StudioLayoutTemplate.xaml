@@ -1,0 +1,344 @@
+<Window x:Class="ClassicAeroStudio.Views.StudioLayoutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Multi-Document Studio Shell — Switch Config &amp; Scripting Studio"
+        Icon="pack://application:,,,/Assets/app_icon.png"
+        Height="640" Width="980"
+        MinHeight="520" MinWidth="840"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ClassicCanvasBackground}"
+        FontFamily="Segoe UI, Tahoma, sans-serif"
+        FontSize="11"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        TextOptions.TextHintingMode="Fixed"
+        RenderOptions.ClearTypeHint="Enabled">
+
+    <Grid Background="{DynamicResource WindowBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <!-- 1. Menu Bar -->
+            <RowDefinition Height="22"/>
+            <!-- 2. Compact Command Strip -->
+            <RowDefinition Height="28"/>
+            <!-- 3. Work Area: Splitter (Top Multi-Tab Code/Config + Bottom Collapsible Console/Log) -->
+            <RowDefinition Height="*"/>
+            <!-- 4. Status Bar -->
+            <RowDefinition Height="22"/>
+        </Grid.RowDefinitions>
+
+        <!-- Row 0: Menu Bar -->
+        <Menu Grid.Row="0" Style="{DynamicResource ClassicMenu}">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New Script" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="_Open Config..." InputGestureText="Ctrl+O"/>
+                <MenuItem Header="_Save All" InputGestureText="Ctrl+Shift+S"/>
+                <Separator Style="{DynamicResource ClassicMenuSeparator}"/>
+                <MenuItem Header="_Close" Click="OnCloseClicked"/>
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Undo" InputGestureText="Ctrl+Z"/>
+                <MenuItem Header="_Redo" InputGestureText="Ctrl+Y"/>
+                <Separator Style="{DynamicResource ClassicMenuSeparator}"/>
+                <MenuItem Header="_Find &amp; Replace..." InputGestureText="Ctrl+F"/>
+            </MenuItem>
+            <MenuItem Header="_Run / Debug">
+                <MenuItem Header="_Execute Script" InputGestureText="F5">
+                    <MenuItem.Icon><Rectangle Width="14" Height="14" Fill="{DynamicResource IconRun}"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Dry-Run Validate">
+                    <MenuItem.Icon><Rectangle Width="14" Height="14" Fill="{DynamicResource IconBuild}"/></MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Terminate Run" InputGestureText="Shift+F5">
+                    <MenuItem.Icon><Rectangle Width="14" Height="14" Fill="{DynamicResource IconStop}"/></MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="_Toggle Bottom Console" IsChecked="True"/>
+                <MenuItem Header="_Line Numbers" IsChecked="True"/>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_Syntax Reference"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Row 1: Compact Command Strip -->
+        <Border Grid.Row="1" Background="{DynamicResource ClassicSubHeaderBackground}" BorderBrush="{DynamicResource ClassicDividerBrush}" BorderThickness="0,1,0,1" SnapsToDevicePixels="True">
+            <Grid VerticalAlignment="Center" Margin="6,0,8,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Style="{DynamicResource ClassicToolbarButton}" Height="22" Padding="6,1" Margin="0,0,4,0" ToolTip="Save (Ctrl+S)">
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="13" Height="13" Fill="{DynamicResource IconSave}" Margin="0,0,4,0"/>
+                            <TextBlock Text="Save"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{DynamicResource ClassicToolbarButton}" Height="22" Padding="6,1" Margin="0,0,4,0" ToolTip="Save All">
+                        <TextBlock Text="Save All"/>
+                    </Button>
+                    <Separator Style="{DynamicResource ClassicMenuSeparator}" Margin="2,2,4,2"/>
+                    <Button Style="{DynamicResource ClassicToolbarButton}" Height="22" Padding="6,1" Margin="0,0,4,0" ToolTip="Run Script (F5)">
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="12" Height="12" Fill="{DynamicResource IconRun}" Margin="0,0,4,0"/>
+                            <TextBlock Text="Run Script" FontWeight="SemiBold" Foreground="{DynamicResource ClassicBadgeSuccessForeground}"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{DynamicResource ClassicToolbarButton}" Height="22" Padding="6,1" Margin="0,0,4,0" ToolTip="Check Syntax">
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="13" Height="13" Fill="{DynamicResource IconBuild}" Margin="0,0,4,0"/>
+                            <TextBlock Text="Check Syntax"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{DynamicResource ClassicToolbarButton}" Height="22" Padding="6,1" Margin="0,0,4,0" ToolTip="Stop">
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="12" Height="12" Fill="{DynamicResource IconStop}" Margin="0,0,4,0"/>
+                            <TextBlock Text="Stop"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <!-- Environment Pill Indicator -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="{DynamicResource ClassicBadgeSuccessBackground}" BorderBrush="{DynamicResource ClassicBadgeSuccessBorder}" BorderThickness="1" CornerRadius="10" Padding="8,2" Margin="0,0,6,0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="8" Height="8" Fill="{DynamicResource IconStatusOnline}" Margin="0,0,4,0"/>
+                            <TextBlock Text="Target: 192.168.1.1 (Core-SW)" FontFamily="Segoe UI" FontSize="10" FontWeight="SemiBold" Foreground="{DynamicResource ClassicBadgeSuccessForeground}"/>
+                        </StackPanel>
+                    </Border>
+                    <Button Style="{DynamicResource ClassicToolbarButton}" Height="22" Padding="6,1">
+                        <TextBlock Text="Switch Target..."/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Row 2: Split Work Area (Top Documents + Bottom Console) -->
+        <Grid Grid.Row="2" Background="{DynamicResource ClassicCodeEditorBackground}">
+            <Grid.RowDefinitions>
+                <!-- Top: Multi-Document TabControl (Fills Window) -->
+                <RowDefinition Height="*"/>
+                <!-- Splitter -->
+                <RowDefinition Height="4"/>
+                <!-- Bottom: Collapsible Output Console (Compact Default Height) -->
+                <RowDefinition Height="120" MinHeight="70"/>
+            </Grid.RowDefinitions>
+
+            <!-- Top: Documents TabControl (Visual Studio Multi-Doc Shell with Syntax Highlighting) -->
+            <TabControl Grid.Row="0"
+                        Style="{DynamicResource ClassicTabControl}"
+                        Background="{DynamicResource ClassicCodeEditorBackground}"
+                        BorderThickness="0,0,0,1"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch">
+                <!-- Tab 1: Cisco/D-Link CLI Config -->
+                <TabItem Style="{DynamicResource ClassicTabItem}"
+                         HorizontalContentAlignment="Stretch"
+                         VerticalContentAlignment="Stretch">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="13" Height="13" Fill="{DynamicResource IconSettings}" Margin="0,0,6,0"/>
+                            <TextBlock Text="core_vlan_trunk.cfg" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid Background="{DynamicResource ClassicCodeEditorBackground}"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <!-- Line numbers gutter -->
+                            <ColumnDefinition Width="42"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="{DynamicResource ClassicCodeGutterBackground}" BorderBrush="{DynamicResource ClassicDividerBrush}" BorderThickness="0,0,1,0" SnapsToDevicePixels="True">
+                            <TextBlock Text="1&#x0a;2&#x0a;3&#x0a;4&#x0a;5&#x0a;6&#x0a;7&#x0a;8&#x0a;9&#x0a;10&#x0a;11&#x0a;12&#x0a;13&#x0a;14&#x0a;15&#x0a;16&#x0a;17&#x0a;18&#x0a;19&#x0a;20&#x0a;21&#x0a;22"
+                                       FontFamily="Consolas" FontSize="11"
+                                       Foreground="{DynamicResource ClassicCodeGutterForeground}"
+                                       TextAlignment="Right" Margin="0,6,8,0" LineHeight="19" LineStackingStrategy="BlockLineHeight"/>
+                        </Border>
+                        <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <TextBlock FontFamily="Consolas" FontSize="11" Margin="8,6,8,8" LineHeight="19" LineStackingStrategy="BlockLineHeight" TextWrapping="NoWrap">
+                                <Run Text="! Enterprise Core Switch Configuration" Foreground="{DynamicResource ClassicCodeComment}"/><LineBreak/>
+                                <Run Text="hostname " Foreground="{DynamicResource ClassicCodeKeyword}"/><Run Text="Core-Distribution-01" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="!" Foreground="{DynamicResource ClassicCodeComment}"/><LineBreak/>
+                                <Run Text="vlan " Foreground="{DynamicResource ClassicCodeKeyword}"/><Run Text="10,20,30,100" Foreground="{DynamicResource ClassicCodeNumber}"/><LineBreak/>
+                                <Run Text="  name " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="Production-Trunk" Foreground="{DynamicResource ClassicCodeString}"/><LineBreak/>
+                                <Run Text="!" Foreground="{DynamicResource ClassicCodeComment}"/><LineBreak/>
+                                <Run Text="interface " Foreground="{DynamicResource ClassicCodeKeyword}"/><Run Text="GigabitEthernet1/0/1" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="  description " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="Uplink to Perimeter Firewall" Foreground="{DynamicResource ClassicCodeString}"/><LineBreak/>
+                                <Run Text="  switchport mode " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="trunk" Foreground="{DynamicResource ClassicCodeKeyword}"/><LineBreak/>
+                                <Run Text="  switchport trunk allowed vlan " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="all" Foreground="{DynamicResource ClassicCodeKeywordAlt}"/><LineBreak/>
+                                <Run Text="  spanning-tree portfast " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="trunk" Foreground="{DynamicResource ClassicCodeKeyword}"/><LineBreak/>
+                                <Run Text="!" Foreground="{DynamicResource ClassicCodeComment}"/><LineBreak/>
+                                <Run Text="interface " Foreground="{DynamicResource ClassicCodeKeyword}"/><Run Text="GigabitEthernet1/0/2" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="  description " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="Management VLAN Access Port" Foreground="{DynamicResource ClassicCodeString}"/><LineBreak/>
+                                <Run Text="  switchport access vlan " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="10" Foreground="{DynamicResource ClassicCodeNumber}"/><LineBreak/>
+                                <Run Text="  spanning-tree bpduguard " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="enable" Foreground="{DynamicResource ClassicCodeKeyword}"/><LineBreak/>
+                                <Run Text="!" Foreground="{DynamicResource ClassicCodeComment}"/><LineBreak/>
+                                <Run Text="ip default-gateway " Foreground="{DynamicResource ClassicCodeKeyword}"/><Run Text="192.168.1.254" Foreground="{DynamicResource ClassicCodeString}"/><LineBreak/>
+                                <Run Text="snmp-server community " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="public " Foreground="{DynamicResource ClassicCodeString}"/><Run Text="RO" Foreground="{DynamicResource ClassicCodeKeyword}"/><LineBreak/>
+                                <Run Text="snmp-server host " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="192.168.1.50 " Foreground="{DynamicResource ClassicCodeString}"/><Run Text="version 2c private" Foreground="{DynamicResource ClassicCodeKeywordAlt}"/><LineBreak/>
+                                <Run Text="!" Foreground="{DynamicResource ClassicCodeComment}"/><LineBreak/>
+                                <Run Text="end" Foreground="{DynamicResource ClassicCodeKeywordAlt}"/>
+                            </TextBlock>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+
+                <!-- Tab 2: Python / Automation Script -->
+                <TabItem Style="{DynamicResource ClassicTabItem}"
+                         HorizontalContentAlignment="Stretch"
+                         VerticalContentAlignment="Stretch">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="13" Height="13" Fill="{DynamicResource IconCode}" Margin="0,0,6,0"/>
+                            <TextBlock Text="deploy_automation.py" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid Background="{DynamicResource ClassicCodeEditorBackground}"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="42"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="{DynamicResource ClassicCodeGutterBackground}" BorderBrush="{DynamicResource ClassicDividerBrush}" BorderThickness="0,0,1,0" SnapsToDevicePixels="True">
+                            <TextBlock Text="1&#x0a;2&#x0a;3&#x0a;4&#x0a;5&#x0a;6&#x0a;7&#x0a;8&#x0a;9&#x0a;10&#x0a;11&#x0a;12&#x0a;13&#x0a;14&#x0a;15&#x0a;16&#x0a;17&#x0a;18&#x0a;19&#x0a;20"
+                                       FontFamily="Consolas" FontSize="11"
+                                       Foreground="{DynamicResource ClassicCodeGutterForeground}"
+                                       TextAlignment="Right" Margin="0,6,8,0" LineHeight="19" LineStackingStrategy="BlockLineHeight"/>
+                        </Border>
+                        <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <TextBlock FontFamily="Consolas" FontSize="11" Margin="8,6,8,8" LineHeight="19" LineStackingStrategy="BlockLineHeight" TextWrapping="NoWrap">
+                                <Run Text="import " Foreground="{DynamicResource ClassicCodeKeywordAlt}"/><Run Text="sys, time, logging" Foreground="{DynamicResource ClassicCodeProperty}"/><LineBreak/>
+                                <Run Text="from " Foreground="{DynamicResource ClassicCodeKeywordAlt}"/><Run Text="netmiko " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="import " Foreground="{DynamicResource ClassicCodeKeywordAlt}"/><Run Text="ConnectHandler" Foreground="{DynamicResource ClassicCodeFunction}"/><LineBreak/>
+                                <Run Text=""/><LineBreak/>
+                                <Run Text="logging." Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="basicConfig" Foreground="{DynamicResource ClassicCodeFunction}"/><Run Text="(level=logging." Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="INFO" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=")" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text=""/><LineBreak/>
+                                <Run Text="def " Foreground="{DynamicResource ClassicCodeKeywordAlt}"/><Run Text="push_configuration" Foreground="{DynamicResource ClassicCodeFunction}"/><Run Text="(host, credentials, command_list):" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="    &quot;&quot;&quot;Connects via SSH and executes commands in transactional mode.&quot;&quot;&quot;" Foreground="{DynamicResource ClassicCodeComment}"/><LineBreak/>
+                                <Run Text="    print" Foreground="{DynamicResource ClassicCodeFunction}"/><Run Text="(" Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="f'Connecting to switch: {host}...'" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=")" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="    device = {" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="        'device_type': " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="'cisco_ios'" Foreground="{DynamicResource ClassicCodeString}"/><Run Text="," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="        'host': " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="host," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="        'username': " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="credentials['user']," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="        'password': " Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text="credentials['pass']," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="    }" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="    with " Foreground="{DynamicResource ClassicCodeKeywordAlt}"/><Run Text="ConnectHandler(**device) " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="as " Foreground="{DynamicResource ClassicCodeKeywordAlt}"/><Run Text="connection:" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="        output = connection." Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="send_config_set" Foreground="{DynamicResource ClassicCodeFunction}"/><Run Text="(command_list)" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="        connection." Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="save_config" Foreground="{DynamicResource ClassicCodeFunction}"/><Run Text="()" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="        return " Foreground="{DynamicResource ClassicCodeKeywordAlt}"/><Run Text="output" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                            </TextBlock>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+
+                <!-- Tab 3: System Topology JSON -->
+                <TabItem Style="{DynamicResource ClassicTabItem}"
+                         HorizontalContentAlignment="Stretch"
+                         VerticalContentAlignment="Stretch">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="13" Height="13" Fill="{DynamicResource IconTerminal}" Margin="0,0,6,0"/>
+                            <TextBlock Text="topology_manifest.json" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid Background="{DynamicResource ClassicCodeEditorBackground}"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="42"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="{DynamicResource ClassicCodeGutterBackground}" BorderBrush="{DynamicResource ClassicDividerBrush}" BorderThickness="0,0,1,0" SnapsToDevicePixels="True">
+                            <TextBlock Text="1&#x0a;2&#x0a;3&#x0a;4&#x0a;5&#x0a;6&#x0a;7&#x0a;8&#x0a;9&#x0a;10&#x0a;11&#x0a;12&#x0a;13&#x0a;14&#x0a;15&#x0a;16&#x0a;17&#x0a;18&#x0a;19&#x0a;20&#x0a;21&#x0a;22&#x0a;23"
+                                       FontFamily="Consolas" FontSize="11"
+                                       Foreground="{DynamicResource ClassicCodeGutterForeground}"
+                                       TextAlignment="Right" Margin="0,6,8,0" LineHeight="19" LineStackingStrategy="BlockLineHeight"/>
+                        </Border>
+                        <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <TextBlock FontFamily="Consolas" FontSize="11" Margin="8,6,8,8" LineHeight="19" LineStackingStrategy="BlockLineHeight" TextWrapping="NoWrap">
+                                <Run Foreground="{DynamicResource ClassicCodeIdentifier}">{</Run><LineBreak/>
+                                <Run Text="  &quot;cluster&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;East-DataCenter&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text="," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="  &quot;redundancy&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;Active-Passive&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text="," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="  &quot;heartbeat_interval_ms&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="250" Foreground="{DynamicResource ClassicCodeNumber}"/><Run Text="," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="  &quot;switches&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": [" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="    &#x7B; " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;id&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;sw-01&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=", " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;ip&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;192.168.1.1&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=", " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;role&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;Core-Dist&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=", " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;ports&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": 24 &#x7D;," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="    &#x7B; " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;id&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;sw-02&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=", " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;ip&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;192.168.1.2&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=", " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;role&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;Standby&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=", " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;ports&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": 24 &#x7D;," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="    &#x7B; " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;id&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;sw-03&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=", " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;ip&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;192.168.1.10&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=", " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;role&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;Access-PoE&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=", " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;ports&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": 48 &#x7D;," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="    &#x7B; " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;id&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;sw-04&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=", " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;ip&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;192.168.1.11&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=", " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;role&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;Edge-Branch&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text=", " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;ports&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": 16 &#x7D;" Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="  ]," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="  &quot;polling_interval_sec&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="30" Foreground="{DynamicResource ClassicCodeNumber}"/><Run Text="," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="  &quot;snmp_trap_community&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="&quot;public&quot;" Foreground="{DynamicResource ClassicCodeString}"/><Run Text="," Foreground="{DynamicResource ClassicCodeIdentifier}"/><LineBreak/>
+                                <Run Text="  &quot;auto_failover&quot;" Foreground="{DynamicResource ClassicCodeProperty}"/><Run Text=": " Foreground="{DynamicResource ClassicCodeIdentifier}"/><Run Text="true" Foreground="{DynamicResource ClassicCodeKeyword}"/><LineBreak/>
+                                <Run Foreground="{DynamicResource ClassicCodeIdentifier}">}</Run>
+                            </TextBlock>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+
+            <!-- GridSplitter between Editor and Output Console -->
+            <GridSplitter Grid.Row="1" Height="4" HorizontalAlignment="Stretch" Background="{DynamicResource ClassicDividerBrush}" ResizeBehavior="PreviousAndNext"/>
+
+            <!-- Bottom: Output / Console Drawer -->
+            <DockPanel Grid.Row="2" Background="{DynamicResource ClassicInnerBackground}">
+                <!-- Drawer Header -->
+                <Border DockPanel.Dock="Top" Background="{DynamicResource ClassicSubHeaderBackground}" BorderBrush="{DynamicResource ClassicDividerBrush}" BorderThickness="0,1,0,1" Padding="8,3" SnapsToDevicePixels="True">
+                    <Grid VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="12" Height="12" Fill="{DynamicResource IconTerminal}" Margin="0,0,5,0"/>
+                            <TextBlock Text="Execution Output &amp; Build Trace" FontFamily="Segoe UI" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource ClassicTextTitle}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Button Style="{DynamicResource ClassicToolbarButton}" Content="Clear Console" Height="20" Padding="5,0" Margin="0,0,4,0"/>
+                            <Button Style="{DynamicResource ClassicToolbarButton}" Content="Copy All" Height="20" Padding="5,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Console Text -->
+                <TextBox Style="{DynamicResource ClassicMultiLineTextBox}"
+                         Background="#16222E"
+                         Foreground="#A2D468"
+                         FontFamily="Consolas"
+                         FontSize="10.5"
+                         BorderThickness="0"
+                         IsReadOnly="True"
+                         VerticalScrollBarVisibility="Auto"
+                         Padding="8,6"
+                         Text="[INFO 12:28:45] Target connected: 192.168.1.1 (SSH v2, AES-256-CTR)&#x0a;[INFO 12:28:46] Validating configuration syntax...&#x0a;[SUCCESS] VLAN Trunk 10,20,30,100 verified without conflicts. Spanning-tree root priority OK.&#x0a;[READY] Awaiting push command (Press Run Script or F5 to commit)."/>
+            </DockPanel>
+        </Grid>
+
+        <!-- Row 3: Status Bar -->
+        <StatusBar Grid.Row="3" Style="{DynamicResource ClassicStatusBar}">
+            <StatusBarItem>
+                <TextBlock Text="Ln 12, Col 24"/>
+            </StatusBarItem>
+            <Separator Style="{DynamicResource ClassicStatusBarSeparator}"/>
+            <StatusBarItem>
+                <TextBlock Text="Encoding: UTF-8 CRLF"/>
+            </StatusBarItem>
+            <Separator Style="{DynamicResource ClassicStatusBarSeparator}"/>
+            <StatusBarItem>
+                <TextBlock Text="Cisco IOS Syntax"/>
+            </StatusBarItem>
+            <Separator Style="{DynamicResource ClassicStatusBarSeparator}"/>
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="9" Height="9" Fill="{DynamicResource IconStatusOnline}" Margin="0,0,4,0"/>
+                    <TextBlock Text="SSH Session Idle"/>
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

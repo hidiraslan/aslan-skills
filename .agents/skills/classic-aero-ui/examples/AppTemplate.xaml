@@ -1,0 +1,15 @@
+<Application x:Class="YourAppNamespace.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- 1. Vektör İkon Mimarisi (67 High-DPI DrawingBrush İkon) -->
+                <ResourceDictionary Source="pack://application:,,,/Assets/Icons/ClassicIcons.xaml"/>
+                <!-- 2. Klasik Windows 7 Aero Tema Paketi (Varsayılan Açık Tema) -->
+                <ResourceDictionary Source="pack://application:,,,/Themes/ClassicWindowsTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classic Aero UI — Windows 7 & Dark Aero Design System for WPF, C# & AI Agents</title>
+  <meta name="description" content="Production-grade Windows 7 Classic Aero and Dark Aero design system for modern WPF (.NET 10) and installable skill for AI Agents (Antigravity, Codex, Claude Code, Cursor).">
+  <link rel="icon" type="image/png" href="screenshots/screenshot_main.png">
+  <style>
+    :root {
+      --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      
+      /* Dark Theme (Default) */
+      --bg-canvas: #090D12;
+      --bg-card: rgba(18, 24, 33, 0.82);
+      --bg-card-border: rgba(255, 255, 255, 0.12);
+      --bg-glass: rgba(14, 20, 28, 0.9);
+      --text-main: #F0F6FC;
+      --text-muted: #8B949E;
+      --accent-blue: #388BFD;
+      --accent-cyan: #39C5BB;
+      --accent-green: #2EA043;
+      --accent-glow: rgba(56, 139, 253, 0.22);
+      --code-bg: #11161D;
+      --code-border: #2B3440;
+      --nav-bg: rgba(9, 13, 18, 0.88);
+      --card-hover-border: #58A6FF;
+      --tag-bg: rgba(56, 139, 253, 0.15);
+      --tag-text: #58A6FF;
+    }
+
+    [data-theme="light"] {
+      --bg-canvas: #F4F6F9;
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-card-border: #D0DFEE;
+      --bg-glass: rgba(255, 255, 255, 0.94);
+      --text-main: #1C2833;
+      --text-muted: #57606A;
+      --accent-blue: #0969DA;
+      --accent-cyan: #0E7490;
+      --accent-green: #238636;
+      --accent-glow: rgba(9, 105, 218, 0.15);
+      --code-bg: #EAEFF5;
+      --code-border: #CBD5E1;
+      --nav-bg: rgba(244, 246, 249, 0.9);
+      --card-hover-border: #0969DA;
+      --tag-bg: rgba(9, 105, 218, 0.1);
+      --tag-text: #0969DA;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      line-height: 1.6;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 10%, rgba(56, 139, 253, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 50%, rgba(57, 197, 187, 0.06) 0%, transparent 45%);
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header & Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background-color: var(--nav-bg);
+      border-bottom: 1px solid var(--bg-card-border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.15rem;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #1A84E3, #0B6EC6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(26, 132, 227, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .brand-badge svg {
+      width: 20px;
+      height: 20px;
+      fill: #FFFFFF;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-blue);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .btn-github {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(180deg, #238636 0%, #2EA043 100%);
+      color: #FFFFFF;
+      padding: 7px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 2px 6px rgba(46, 160, 67, 0.25);
+      transition: all 0.15s ease;
+    }
+
+    .btn-github:hover {
+      background: #2EA043;
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 68px 0 44px;
+      text-align: center;
+    }
+
+    .hero-badge-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 15px;
+      border-radius: 20px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: 1px solid var(--bg-card-border);
+    }
+
+    .hero-title {
+      font-size: 3.4rem;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--text-main) 35%, var(--accent-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+
+    .runtime-tag-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      padding: 8px 18px;
+      border-radius: 30px;
+      margin-bottom: 36px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Quick Install Box */
+    .install-box {
+      max-width: 780px;
+      margin: 0 auto 40px;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 12px;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    }
+
+    .install-code {
+      font-family: var(--font-mono);
+      font-size: 0.92rem;
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .install-prefix {
+      color: var(--text-muted);
+      user-select: none;
+    }
+
+    .btn-copy {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-copy:hover {
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+
+    /* Shields Bar */
+    .shields-bar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 48px;
+    }
+
+    .shield-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.78rem;
+      border-radius: 4px;
+      overflow: hidden;
+      font-family: var(--font-mono);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .shield-label {
+      background: #2D333B;
+      color: #C9D1D9;
+      padding: 4px 8px;
+      font-weight: 600;
+    }
+
+    .shield-value {
+      padding: 4px 8px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .shield-purple { background: #512BD4; }
+    .shield-blue { background: #0078D7; }
+    .shield-green { background: #238636; }
+    .shield-orange { background: #BD561D; }
+    .shield-teal { background: #0E7490; }
+
+    /* Comparison Banner Box */
+    .comparison-banner-box {
+      max-width: 1140px;
+      margin: 0 auto 72px;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+    }
+
+    .comparison-banner-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Section Headers */
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* AI Agents Grid */
+    .ai-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 22px;
+      margin-bottom: 80px;
+    }
+
+    .ai-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .ai-card:hover {
+      border-color: var(--card-hover-border);
+      box-shadow: 0 8px 24px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .ai-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .ai-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      background: var(--tag-bg);
+      border: 1px solid var(--bg-card-border);
+      flex-shrink: 0;
+    }
+
+    .ai-name {
+      font-size: 1.18rem;
+      font-weight: 700;
+    }
+
+    .ai-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-blue);
+    }
+
+    .ai-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .ai-prompt-box {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: all 0.15s ease;
+    }
+
+    .ai-prompt-box:hover {
+      border-color: var(--accent-blue);
+      background: rgba(56, 139, 253, 0.08);
+    }
+
+    .ai-prompt-box span:first-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Runtime Compatibility Table */
+    .compat-table-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 80px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .compat-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+
+    .compat-table th, .compat-table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--bg-card-border);
+    }
+
+    .compat-table th {
+      background: var(--code-bg);
+      font-weight: 700;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .compat-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge-ok {
+      background: rgba(46, 160, 67, 0.18);
+      color: #3FB950;
+      border: 1px solid rgba(46, 160, 67, 0.3);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    /* Showcase Tabs */
+    .showcase-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 24px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--tag-bg);
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(540px, 1fr));
+      gap: 28px;
+      margin-bottom: 80px;
+    }
+
+    @media (max-width: 640px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .gallery-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gallery-card:hover {
+      border-color: var(--card-hover-border);
+      box-shadow: 0 12px 36px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .card-img-wrap {
+      background: #000000;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border-bottom: 1px solid var(--bg-card-border);
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .card-img-wrap:hover img {
+      transform: scale(1.02);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(8px);
+      color: #FFFFFF;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Manifesto Principles */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .principle-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 12px;
+      padding: 28px;
+    }
+
+    .principle-num {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 10px;
+    }
+
+    .principle-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .principle-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Modal Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      cursor: zoom-out;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 95vw;
+      max-height: 92vh;
+      border-radius: 8px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #238636;
+      color: #FFFFFF;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      display: none;
+      z-index: 3000;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast.show {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--bg-card-border);
+      padding: 48px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--accent-blue);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <div class="brand-badge">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="8" height="8" rx="1.5"/>
+            <rect x="13" y="3" width="8" height="8" rx="1.5"/>
+            <rect x="3" y="13" width="8" height="8" rx="1.5"/>
+            <rect x="13" y="13" width="8" height="8" rx="1.5"/>
+          </svg>
+        </div>
+        <span>Classic Aero UI</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#agents">AI Agents</a></li>
+        <li><a href="#compatibility">Compatibility</a></li>
+        <li><a href="#showcase">Visual Showcase</a></li>
+        <li><a href="#manifesto">Principles</a></li>
+        <li><a href="#install">Install</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+          <span id="themeIcon">☀️</span>
+          <span id="themeLabel">Light Aero</span>
+        </button>
+        <a href="https://github.com/hidiraslan/aslan-skills" class="btn-github" target="_blank" rel="noopener">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge-wrap">
+        <div class="hero-pill">
+          <span>✨ Enterprise Design System &amp; AI Agent Skill</span>
+        </div>
+      </div>
+      
+      <h1 class="hero-title">Classic Aero UI Studio</h1>
+      
+      <p class="hero-subtitle">
+        The authentic <strong>Windows 7 Classic Aero</strong> &amp; <strong>Obsidian Dark Aero</strong> desktop UI framework for modern C# / WPF. Ready to integrate into any project with one command or prompt to your AI coding assistant.
+      </p>
+
+      <div class="runtime-tag-bar">
+        <span>🛡️ Supported Runtimes:</span>
+        <strong style="color: var(--text-main);">.NET 10 (tested)</strong>
+        <span>•</span>
+        <strong style="color: var(--text-main);">.NET 6–9 (expected)</strong>
+        <span>•</span>
+        <span>Pure C# / Native WPF</span>
+      </div>
+
+      <!-- Quick Install Box -->
+      <div class="install-box" id="install">
+        <div class="install-code">
+          <span class="install-prefix">$</span>
+          <span id="cmdText">git clone https://github.com/hidiraslan/aslan-skills.git</span>
+        </div>
+        <button class="btn-copy" onclick="copyInstallCmd()">
+          <span id="copyIcon">📋</span> Copy
+        </button>
+      </div>
+
+      <!-- Shields Bar -->
+      <div class="shields-bar">
+        <div class="shield-badge">
+          <span class="shield-label">Runtime</span>
+          <span class="shield-value shield-purple">.NET 10 (tested)</span>
+        </div>
+        <div class="shield-badge">
+          <span class="shield-label">Language</span>
+          <span class="shield-value shield-blue">C# / WPF</span>
+        </div>
+        <div class="shield-badge">
+          <span class="shield-label">Design</span>
+          <span class="shield-value shield-blue">Windows 7 Aero &amp; Dark Glass</span>
+        </div>
+        <div class="shield-badge">
+          <span class="shield-label">Dependencies</span>
+          <span class="shield-value shield-green">Zero 3rd-Party (Pure WPF)</span>
+        </div>
+        <div class="shield-badge">
+          <span class="shield-label">Vector Icons</span>
+          <span class="shield-value shield-teal">67 Native DrawingBrush</span>
+        </div>
+        <div class="shield-badge">
+          <span class="shield-label">ClearType</span>
+          <span class="shield-value shield-orange">Subpixel Fixed Display</span>
+        </div>
+      </div>
+
+      <!-- The Anti-Flat Difference (Hero Comparison Banner) -->
+      <div class="comparison-banner-box">
+        <img src="screenshots/comparison_flat_vs_aero.png?v=4" alt="Classic Aero UI vs Generic Flat AI">
+      </div>
+
+      <!-- Animated Light/Dark Theme Switch Showcase -->
+      <div class="comparison-banner-box" style="margin-top: -32px;">
+        <img src="screenshots/theme_comparison.gif?v=4" alt="Dynamic Light and Dark Aero Theme Switch">
+      </div>
+
+    </div>
+  </section>
+
+  <!-- AI Agents Integration (Codex, Antigravity, Claude Code, Cursor) -->
+  <section class="container" id="agents">
+    <div class="section-header">
+      <h2 class="section-title">⚡ 1-Click AI Coding Assistant Prompts</h2>
+      <p class="section-subtitle">
+        Copy the prompt for your favorite AI agent. The assistant clones the skill, sets the design exclusivity rules, and implements authentic Aero XAML directly into your C# WPF project.
+      </p>
+    </div>
+
+    <div class="ai-grid">
+      <!-- OpenAI Codex / GitHub Copilot -->
+      <div class="ai-card">
+        <div>
+          <div class="ai-head">
+            <div class="ai-icon">💻</div>
+            <div>
+              <h3 class="ai-name">OpenAI Codex</h3>
+              <span class="ai-tag">CLI / Copilot Agent</span>
+            </div>
+          </div>
+          <p class="ai-desc">Follows subpixel ClearType coordinates, 1px boundaries, and builds high-density C# WPF views without flat-web bloat.</p>
+        </div>
+        <div class="ai-prompt-box" onclick="copySnippet(this, 'Install the Classic Aero UI skill from https://github.com/hidiraslan/aslan-skills and apply Windows 7 Classic Aero styling to my WPF views.')">
+          <span>Apply Classic Aero UI to my WPF project...</span>
+          <span>📋</span>
+        </div>
+      </div>
+
+      <!-- Google Antigravity -->
+      <div class="ai-card">
+        <div>
+          <div class="ai-head">
+            <div class="ai-icon">🪐</div>
+            <div>
+              <h3 class="ai-name">Antigravity</h3>
+              <span class="ai-tag">Agentic IDE &amp; CLI</span>
+            </div>
+          </div>
+          <p class="ai-desc">Auto-discovers <code>.agents/skills/classic-aero-ui/</code> once the folder is in your project.</p>
+        </div>
+        <div class="ai-prompt-box" onclick="copySnippet(this, 'Add the classic-aero-ui skill from https://github.com/hidiraslan/aslan-skills and set the theme to Classic Aero.')">
+          <span>Add classic-aero-ui skill from repo...</span>
+          <span>📋</span>
+        </div>
+      </div>
+
+      <!-- Claude Code -->
+      <div class="ai-card">
+        <div>
+          <div class="ai-head">
+            <div class="ai-icon">🤖</div>
+            <div>
+              <h3 class="ai-name">Claude Code</h3>
+              <span class="ai-tag">Anthropic Terminal Agent</span>
+            </div>
+          </div>
+          <p class="ai-desc">Load <code>AGENTS.md</code> through <code>CLAUDE.md</code> (<code>@AGENTS.md</code>) to keep flat libraries (wpf-ui/WinUI) out.</p>
+        </div>
+        <div class="ai-prompt-box" onclick="copySnippet(this, 'Claude, check https://github.com/hidiraslan/aslan-skills and convert this WPF window to Classic Aero.')">
+          <span>Convert this window to Classic Aero...</span>
+          <span>📋</span>
+        </div>
+      </div>
+
+      <!-- Cursor Composer -->
+      <div class="ai-card">
+        <div>
+          <div class="ai-head">
+            <div class="ai-icon">⚡</div>
+            <div>
+              <h3 class="ai-name">Cursor</h3>
+              <span class="ai-tag">Composer / Agent Mode</span>
+            </div>
+          </div>
+          <p class="ai-desc">Deeply indexes <code>AGENTS.md</code> and generates authentic Aero gradients, 3D crystal LEDs, and tactile button bevels.</p>
+        </div>
+        <div class="ai-prompt-box" onclick="copySnippet(this, '@Web https://github.com/hidiraslan/aslan-skills Refactor this settings page to Classic Aero 180px list navigation.')">
+          <span>Refactor to Aero 180px list navigation...</span>
+          <span>📋</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Runtime Compatibility Matrix -->
+  <section class="container" id="compatibility">
+    <div class="section-header">
+      <h2 class="section-title">Framework &amp; Language Compatibility</h2>
+      <p class="section-subtitle">
+        Built on pure, unadulterated WPF XAML. Tested on .NET 10; other runtimes are expected to work but are untested.
+      </p>
+    </div>
+
+    <div class="compat-table-wrap">
+      <table class="compat-table">
+        <thead>
+          <tr>
+            <th>Target Framework</th>
+            <th>Language</th>
+            <th>Compatibility Status</th>
+            <th>Special Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>.NET 10 (Windows)</strong></td>
+            <td>C#</td>
+            <td><span class="badge-ok">✓ Tested</span></td>
+            <td>The demo app builds with 0 errors and 0 warnings.</td>
+          </tr>
+          <tr>
+            <td><strong>.NET 6 – 9</strong></td>
+            <td>C#</td>
+            <td><span class="badge-ok" style="background: rgba(210,153,34,0.18); color: #d29922; border-color: rgba(210,153,34,0.3);">Expected</span></td>
+            <td>Standard WPF XAML and C#; not individually tested.</td>
+          </tr>
+          <tr>
+            <td><strong>.NET Framework 4.5 – 4.8</strong></td>
+            <td>C#</td>
+            <td><span class="badge-ok" style="background: rgba(210,153,34,0.18); color: #d29922; border-color: rgba(210,153,34,0.3);">Untested</span></td>
+            <td>The XAML uses core WPF primitives, but ThemeManager.cs and the demo use modern C# features that may need small adjustments.</td>
+          </tr><tr>
+            <td><strong>Win32 DWM Immersive Dark Titlebar</strong></td>
+            <td>C# P/Invoke</td>
+            <td><span class="badge-ok">✓ Automatic Win10/Win11</span></td>
+            <td>Titlebar seamlessly matches dark theme via native DwmSetWindowAttribute.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Showcase Section -->
+  <section class="container" id="showcase">
+    <div class="section-header">
+      <h2 class="section-title">Visual Showcase</h2>
+      <p class="section-subtitle">
+        Click any view to inspect full-resolution high-DPI screenshots of dashboards, analytics, shells, and dialogs.
+      </p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="showcase-tabs">
+      <button class="tab-btn active" onclick="filterGallery('all', this)">All Views</button>
+      <button class="tab-btn" onclick="filterGallery('dashboard', this)">Dashboards</button>
+      <button class="tab-btn" onclick="filterGallery('analytics', this)">Analytics &amp; Charts</button>
+      <button class="tab-btn" onclick="filterGallery('shells', this)">Architectural Shells</button>
+      <button class="tab-btn" onclick="filterGallery('settings', this)">Settings &amp; Navigation</button>
+      <button class="tab-btn" onclick="filterGallery('dialogs', this)">TaskDialogs &amp; Wizards</button>
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="gallery-grid" id="galleryContainer">
+
+      <!-- Card: Light Dashboard -->
+      <div class="gallery-card" data-category="dashboard">
+        <div class="card-img-wrap" onclick="openLightbox('screenshots/screenshot_main.png?v=3')">
+          <img src="screenshots/screenshot_main.png?v=3" alt="Classic Aero Light Dashboard">
+          <span class="card-badge">Light Aero</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Primary Enterprise Dashboard</h3>
+          <p class="card-desc">Windows 7 royal blue glass ribbon, quick action toolbar, high-density topology canvas, and status bar.</p>
+        </div>
+      </div>
+
+      <!-- Card: Dark Dashboard -->
+      <div class="gallery-card" data-category="dashboard">
+        <div class="card-img-wrap" onclick="openLightbox('screenshots/screenshot_main_dark.png?v=3')">
+          <img src="screenshots/screenshot_main_dark.png?v=3" alt="Dark Aero Obsidian Dashboard">
+          <span class="card-badge">Dark Aero</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Dark Aero (Obsidian Glass)</h3>
+          <p class="card-desc">Smoked charcoal glass, glowing cyan telemetry badges, and DWM native dark titlebar integration.</p>
+        </div>
+      </div>
+
+      <!-- Card: Analytics Light -->
+      <div class="gallery-card" data-category="analytics">
+        <div class="card-img-wrap" onclick="openLightbox('screenshots/screenshot_main_analytics.png?v=3')">
+          <img src="screenshots/screenshot_main_analytics.png?v=3" alt="Real-Time Analytics Light">
+          <span class="card-badge">Analytics</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Analytics &amp; Real-Time Telemetry</h3>
+          <p class="card-desc">Fluid borderless Aero donut charts with radial gloss, compact KPI bars, and live network graphs.</p>
+        </div>
+      </div>
+
+      <!-- Card: Analytics Dark -->
+      <div class="gallery-card" data-category="analytics">
+        <div class="card-img-wrap" onclick="openLightbox('screenshots/screenshot_analytics_dark.png?v=3')">
+          <img src="screenshots/screenshot_analytics_dark.png?v=3" alt="Real-Time Analytics Dark">
+          <span class="card-badge">Dark Analytics</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Dark Telemetry &amp; Bullet Charts</h3>
+          <p class="card-desc">High-contrast emerald, amber, and crimson indicators optimized for 24/7 mission-critical operations.</p>
+        </div>
+      </div>
+
+      <!-- Card: Explorer Shell -->
+      <div class="gallery-card" data-category="shells">
+        <div class="card-img-wrap" onclick="openLightbox('screenshots/screenshot_layout_explorer.png?v=3')">
+          <img src="screenshots/screenshot_layout_explorer.png?v=3" alt="Windows Explorer Shell">
+          <span class="card-badge">Explorer Shell</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Windows Explorer Shell</h3>
+          <p class="card-desc">Authentic crumb navigation bar, non-jumping TreeView sidebar, content view switcher, and details preview pane.</p>
+        </div>
+      </div>
+
+      <!-- Card: MMC Console -->
+      <div class="gallery-card" data-category="shells">
+        <div class="card-img-wrap" onclick="openLightbox('screenshots/screenshot_layout_mmc.png?v=3')">
+          <img src="screenshots/screenshot_layout_mmc.png?v=3" alt="MMC 3-Pane Console">
+          <span class="card-badge">MMC Console</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">MMC 3-Pane Console Shell</h3>
+          <p class="card-desc">Classic Microsoft Management Console layout with Scope Pane (left), Results View (center), and Actions Pane (right).</p>
+        </div>
+      </div>
+
+      <!-- Card: Visual Studio Shell -->
+      <div class="gallery-card" data-category="shells">
+        <div class="card-img-wrap" onclick="openLightbox('screenshots/screenshot_layout_studio.png?v=3')">
+          <img src="screenshots/screenshot_layout_studio.png?v=3" alt="Visual Studio Shell">
+          <span class="card-badge">Studio Shell</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Multi-Document Studio Shell</h3>
+          <p class="card-desc">Tabbed document workspace with code editor canvas, docked Solution Explorer, Properties inspector, and Output console.</p>
+        </div>
+      </div>
+
+      <!-- Card: Classic Settings -->
+      <div class="gallery-card" data-category="settings">
+        <div class="card-img-wrap" onclick="openLightbox('screenshots/screenshot_settings.png?v=3')">
+          <img src="screenshots/screenshot_settings.png?v=3" alt="Classic Settings Window">
+          <span class="card-badge">Mode A: List</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Classic 180px List Navigation</h3>
+          <p class="card-desc">32px row items with 16x16 vector icons, royal blue Aero selection gradient, and zero horizontal jump on click.</p>
+        </div>
+      </div>
+
+      <!-- Card: Tile Settings -->
+      <div class="gallery-card" data-category="settings">
+        <div class="card-img-wrap" onclick="openLightbox('screenshots/screenshot_tile_settings.png?v=3')">
+          <img src="screenshots/screenshot_tile_settings.png?v=3" alt="Tile Settings Window">
+          <span class="card-badge">Mode B: Tiles</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Windows 7 Royal Blue Square Tiles</h3>
+          <p class="card-desc">130px sidebar with 96x68px square items, 26x26px vector icons on top, label underneath, and subtle tactile bevels.</p>
+        </div>
+      </div>
+
+      <!-- Card: TaskDialog & Alerts -->
+      <div class="gallery-card" data-category="dialogs">
+        <div class="card-img-wrap" onclick="openLightbox('screenshots/screenshot_confirm_dialog.png?v=3')">
+          <img src="screenshots/screenshot_confirm_dialog.png?v=3" alt="Windows Vista/7 TaskDialog">
+          <span class="card-badge">TaskDialog</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Windows Vista/7 TaskDialog</h3>
+          <p class="card-desc">Authentic header banner, large 48px command link buttons, chevron expander details site, and footer verification checkbox.</p>
+        </div>
+      </div>
+
+      <!-- Card: Multi-Step Wizard -->
+      <div class="gallery-card" data-category="dialogs">
+        <div class="card-img-wrap" onclick="openLightbox('screenshots/screenshot_time_settings.png?v=3')">
+          <img src="screenshots/screenshot_time_settings.png?v=3" alt="Multi-Step Wizard">
+          <span class="card-badge">Wizard</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Multi-Step Navigation Wizard</h3>
+          <p class="card-desc">Step chevron header bar with smooth Next/Back navigation and synchronized state indicators.</p>
+        </div>
+      </div>
+
+      <!-- Card: Vector Icons Gallery -->
+      <div class="gallery-card" data-category="analytics">
+        <div class="card-img-wrap" onclick="openLightbox('screenshots/screenshot_main_icons.png?v=3')">
+          <img src="screenshots/screenshot_main_icons.png?v=3" alt="Vector Icons Gallery">
+          <span class="card-badge">67 Vector Icons</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">67 Native High-DPI Vector Icons</h3>
+          <p class="card-desc">Pure XAML DrawingBrush assets categorized by Hardware, Network, Auth &amp; Security, Development, and System.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Manifesto / Principles -->
+  <section class="container" id="manifesto">
+    <div class="section-header">
+      <h2 class="section-title">The Anti-Flat Manifesto</h2>
+      <p class="section-subtitle">
+        Enterprise desktop consoles require clarity, density, and tactile response. Here is why flat web design fails for high-density software.
+      </p>
+    </div>
+
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="principle-num">01 / THE 1PX LAW</div>
+        <h3 class="principle-title">Crisp 1px Boundaries</h3>
+        <p class="principle-desc">No washed-out 8px margins or fuzzy borders. Every cell, divider, and group box snaps to exact device pixel boundaries using <code>SnapsToDevicePixels="True"</code>.</p>
+      </div>
+
+      <div class="principle-card">
+        <div class="principle-num">02 / HARDWARE CLEARTYPE</div>
+        <h3 class="principle-title">Subpixel Typography</h3>
+        <p class="principle-desc">Fixed subpixel Segoe UI rendering with <code>TextFormattingMode="Display"</code> ensures razor-sharp readability on both 1080p industrial monitors and 4K workstations.</p>
+      </div>
+
+      <div class="principle-card">
+        <div class="principle-num">03 / ZERO DEPENDENCIES</div>
+        <h3 class="principle-title">Pure WPF &amp; .NET</h3>
+        <p class="principle-desc">Zero external DLLs, no npm bloat, no <code>wpf-ui</code> conflicts, no Electron overhead.</p>
+      </div>
+
+      <div class="principle-card">
+        <div class="principle-num">04 / ZERO HORIZONTAL JUMP</div>
+        <h3 class="principle-title">Predictable Scrolling</h3>
+        <p class="principle-desc">Global event handlers suppress unwanted TreeView horizontal shifts on item selection and eliminate accidental top-level menu hover auto-opening.</p>
+      </div>
+
+      <div class="principle-card">
+        <div class="principle-num">05 / 3D CRYSTAL LEDS</div>
+        <h3 class="principle-title">Instant Status Recognition</h3>
+        <p class="principle-desc">Spherical 3D gloss status lenses (Emerald OK, Amber Warning, Crimson Fault, Blue Standby) give operators instant peripheral telemetry recognition.</p>
+      </div>
+
+      <div class="principle-card">
+        <div class="principle-num">06 / DUAL-THEME ENGINE</div>
+        <h3 class="principle-title">Live Dynamic Swapping</h3>
+        <p class="principle-desc">Switch seamlessly between Windows 7 Classic Aero and Dark Aero without restarting windows, complete with Win32 DWM dark titlebar synchronization.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightboxModal" onclick="closeLightbox()">
+    <img id="lightboxImg" src="" alt="Full Resolution Preview">
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toastBox">
+    <span>✓</span> Copied to clipboard!
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>
+        <strong>Classic Aero Enterprise UI</strong> is open source under the <strong>MIT License</strong>.
+      </p>
+      <p style="margin-top: 8px;">
+        Part of the <a href="https://github.com/hidiraslan" target="_blank">aslan-skills</a> agentic intelligence collection.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Theme Switcher
+    const htmlEl = document.documentElement;
+    const themeBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
+
+    themeBtn.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', next);
+      themeIcon.textContent = next === 'dark' ? '☀️' : '🌙';
+      themeLabel.textContent = next === 'dark' ? 'Light Aero' : 'Dark Aero';
+    });
+
+    // Gallery Filter
+    function filterGallery(category, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('.gallery-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Lightbox
+    const lightbox = document.getElementById('lightboxModal');
+    const lightboxImg = document.getElementById('lightboxImg');
+
+    function openLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.classList.add('active');
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // Copy Toast
+    function showToast(msg) {
+      const toast = document.getElementById('toastBox');
+      if (msg) toast.innerHTML = `<span>✓</span> ${msg}`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function copyInstallCmd() {
+      const text = document.getElementById('cmdText').textContent;
+      navigator.clipboard.writeText(text).then(() => showToast('Install command copied!'));
+    }
+
+    function copySnippet(el, text) {
+      navigator.clipboard.writeText(text).then(() => showToast('AI prompt copied!'));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,589 @@
+<Window x:Class="ClassicAeroStudio.Views.DeviceSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Device Settings - DGS-1210-20/C1"
+        Icon="pack://application:,,,/Assets/app_icon.png"
+        Height="540" Width="760"
+        MinHeight="500" MinWidth="700"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ClassicCanvasBackground}"
+        FontFamily="Segoe UI, Tahoma, sans-serif"
+        FontSize="11"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        TextOptions.TextHintingMode="Fixed"
+        RenderOptions.ClearTypeHint="Enabled">
+
+    <Grid Margin="10,8,10,10">
+        <Grid.RowDefinitions>
+            <!-- Property Sheet Tabs and Content -->
+            <RowDefinition Height="*"/>
+            <!-- Bottom Action Buttons Bar -->
+            <RowDefinition Height="38"/>
+        </Grid.RowDefinitions>
+
+        <!-- Main Tab Control for Device Settings -->
+        <TabControl x:Name="SettingsTabControl"
+                    Grid.Row="0"
+                    Style="{DynamicResource ClassicPropertySheetTabControl}"
+                    Margin="0,0,0,4">
+
+            <!-- ================= TAB 1: SYSTEM & GENERAL ================= -->
+            <TabItem Header="System &amp; General" Style="{DynamicResource ClassicPropertySheetTabItem}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="8">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <!-- Top: Device Identification & Identity -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Bottom: Two-column cards (Hardware Features on Left, Chassis & Telemetry on Right) -->
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- GroupBox: Device Identification -->
+                        <GroupBox Grid.Row="0" Header="Device Identification &amp; Hardware Identity" Style="{DynamicResource ClassicGroupBox}" Margin="0,0,0,8">
+                            <Grid Margin="6,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="115"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="105"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="26"/>
+                                    <RowDefinition Height="26"/>
+                                    <RowDefinition Height="26"/>
+                                    <RowDefinition Height="26"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Device Name -->
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Device Name:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" Text="DGS-1210-20" Style="{DynamicResource ClassicTextBox}"/>
+
+                                <!-- Model Name (Disabled/ReadOnly) -->
+                                <TextBlock Grid.Row="0" Grid.Column="3" Text="Model Name:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="0" Grid.Column="4" Text="DGS-1210-20/C1" IsEnabled="False" Style="{DynamicResource ClassicTextBox}"/>
+
+                                <!-- System Location -->
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="System Location:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="Server Room Rack A-04" Style="{DynamicResource ClassicTextBox}"/>
+
+                                <!-- Hardware Version -->
+                                <TextBlock Grid.Row="1" Grid.Column="3" Text="Hardware Ver:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="1" Grid.Column="4" Text="C1 (Firmware v3.10)" IsEnabled="False" Style="{DynamicResource ClassicTextBox}"/>
+
+                                <!-- System Contact -->
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="System Contact:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Text="admin@enterprise.local" Style="{DynamicResource ClassicTextBox}"/>
+
+                                <!-- Serial Number -->
+                                <TextBlock Grid.Row="2" Grid.Column="3" Text="Serial Number:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="2" Grid.Column="4" Text="QB7E1G500012" IsEnabled="False" Style="{DynamicResource ClassicTextBox}"/>
+
+                                <!-- MAC Address -->
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Base MAC Addr:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" Text="00:1E:58:34:B2:70" IsEnabled="False" Style="{DynamicResource ClassicTextBox}"/>
+
+                                <!-- System Uptime -->
+                                <TextBlock Grid.Row="3" Grid.Column="3" Text="System Uptime:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="3" Grid.Column="4" Text="48d 14h 22m (Active)" IsEnabled="False" Style="{DynamicResource ClassicTextBox}"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- Bottom 2-Column Split: Hardware Features (Left) & Chassis / Telemetry (Right) -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Left: Hardware Options & Features -->
+                            <GroupBox Grid.Column="0" Header="Chassis &amp; System Features" Style="{DynamicResource ClassicGroupBox}">
+                                <StackPanel Margin="6,4">
+                                    <CheckBox Content="Enable Jumbo Frame support (Up to 9216 bytes)"
+                                              IsChecked="True" Style="{DynamicResource ClassicCheckBox}" Margin="0,0,0,5"/>
+                                    <CheckBox Content="Enable Spanning Tree Protocol (STP / RSTP)"
+                                              IsChecked="False" Style="{DynamicResource ClassicCheckBox}" Margin="0,0,0,5"/>
+                                    <CheckBox Content="IEEE 802.3az Energy Efficient Ethernet (EEE)"
+                                              IsChecked="True" Style="{DynamicResource ClassicCheckBox}" Margin="0,0,0,5"/>
+                                    <CheckBox Content="Tri-state: Enable Asymmetric VLANs"
+                                              IsThreeState="True" IsChecked="{x:Null}" Style="{DynamicResource ClassicCheckBox}" Margin="0,0,0,5"/>
+                                    <CheckBox Content="Enable D-Link Discovery Protocol (DDP v2)"
+                                              IsChecked="True" Style="{DynamicResource ClassicCheckBox}" Margin="0,0,0,5"/>
+                                    <CheckBox Content="Enable LLDP Topology Snooping Agent"
+                                              IsChecked="True" Style="{DynamicResource ClassicCheckBox}" Margin="0,0,0,5"/>
+                                    <CheckBox Content="Read-Only Administration Mode (Locked)"
+                                              IsEnabled="False" Style="{DynamicResource ClassicCheckBox}"/>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <!-- Right: Operational State & Environmental Status -->
+                            <GroupBox Grid.Column="2" Header="Operational State &amp; Environment" Style="{DynamicResource ClassicGroupBox}">
+                                <Grid Margin="6,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="105"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="26"/>
+                                        <RowDefinition Height="26"/>
+                                        <RowDefinition Height="26"/>
+                                        <RowDefinition Height="26"/>
+                                        <RowDefinition Height="26"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- LED Mode -->
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Front LED Mode:" VerticalAlignment="Center"/>
+                                    <ComboBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource ClassicComboBox}" SelectedIndex="0">
+                                        <ComboBoxItem Content="Link / Activity Mode"/>
+                                        <ComboBoxItem Content="PoE Power Status Mode"/>
+                                        <ComboBoxItem Content="10/100/1000 Link Speed"/>
+                                    </ComboBox>
+
+                                    <!-- Active Flash Bank -->
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Boot Bank Image:" VerticalAlignment="Center"/>
+                                    <ComboBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource ClassicComboBox}" SelectedIndex="0">
+                                        <ComboBoxItem Content="Image-1 (v3.10.014 - Primary)"/>
+                                        <ComboBoxItem Content="Image-2 (v3.00.002 - Backup)"/>
+                                    </ComboBox>
+
+                                    <!-- Fan Status -->
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Cooling Fans:" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Rectangle Width="8" Height="8" Fill="{DynamicResource IconStatusOnline}" Margin="0,0,5,0"/>
+                                        <TextBlock Text="Dual Fans Normal (4,200 RPM)" Foreground="{DynamicResource ClassicTextTitle}"/>
+                                    </StackPanel>
+
+                                    <!-- Thermal State -->
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Thermal Sensor:" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Rectangle Width="8" Height="8" Fill="{DynamicResource IconStatusOnline}" Margin="0,0,5,0"/>
+                                        <TextBlock Text="34.2 °C (Within Normal Range)" Foreground="{DynamicResource ClassicTextTitle}"/>
+                                    </StackPanel>
+
+                                    <!-- Power Supply -->
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Power Supply Unit:" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Rectangle Width="8" Height="8" Fill="{DynamicResource IconStatusOnline}" Margin="0,0,5,0"/>
+                                        <TextBlock Text="Internal AC 100-240V (Stable)" Foreground="{DynamicResource ClassicTextTitle}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ================= TAB 2: NETWORK & IP ================= -->
+            <TabItem Header="Network &amp; IP" Style="{DynamicResource ClassicPropertySheetTabItem}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="8">
+                    <StackPanel>
+                        <!-- GroupBox: IP Assignment Mode -->
+                        <GroupBox Header="IP Assignment Mode" Style="{DynamicResource ClassicGroupBox}" Margin="0,0,0,8">
+                            <StackPanel Orientation="Horizontal" Margin="6,4">
+                                <RadioButton Content="Static IP Address"
+                                             IsChecked="True"
+                                             GroupName="IpModeGroup"
+                                             Style="{StaticResource ClassicRadioButton}"
+                                             Margin="0,0,24,0"/>
+                                <RadioButton Content="Dynamic IP (DHCP / BOOTP Auto-Configuration)"
+                                             GroupName="IpModeGroup"
+                                             Style="{StaticResource ClassicRadioButton}"
+                                             Margin="0,0,24,0"/>
+                                <RadioButton Content="IPv6 Stateless Auto-Configuration (SLAAC)"
+                                             GroupName="IpModeGroup"
+                                             IsEnabled="False"
+                                             Style="{StaticResource ClassicRadioButton}"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- GroupBox: IPv4 Network Parameters -->
+                        <GroupBox Header="IPv4 Network Parameters" Style="{DynamicResource ClassicGroupBox}" Margin="0,0,0,8">
+                            <Grid Margin="6,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="110"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="26"/>
+                                    <RowDefinition Height="26"/>
+                                    <RowDefinition Height="26"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="IP Address:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" Text="192.168.1.20" Style="{DynamicResource ClassicTextBox}"/>
+
+                                <TextBlock Grid.Row="0" Grid.Column="3" Text="Subnet Mask:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="0" Grid.Column="4" Text="255.255.255.0" Style="{DynamicResource ClassicTextBox}"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Default Gateway:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="192.168.1.1" Style="{DynamicResource ClassicTextBox}"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="3" Text="Primary DNS:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="1" Grid.Column="4" Text="192.168.1.1" Style="{DynamicResource ClassicTextBox}"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Secondary DNS:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Text="8.8.8.8" Style="{DynamicResource ClassicTextBox}"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="3" Text="MTU Size (Bytes):" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Row="2" Grid.Column="4" Style="{DynamicResource ClassicComboBox}" SelectedIndex="0">
+                                    <ComboBoxItem Content="1500 (Standard Ethernet)"/>
+                                    <ComboBoxItem Content="1518 (802.1Q Tagged)"/>
+                                    <ComboBoxItem Content="9000 (Jumbo Frame 9K)"/>
+                                    <ComboBoxItem Content="9216 (Maximum Jumbo)"/>
+                                </ComboBox>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- GroupBox: Management Protocol -->
+                        <GroupBox Header="Management Protocols" Style="{DynamicResource ClassicGroupBox}">
+                            <Grid Margin="6,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="110"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="26"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Active Protocol:" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource ClassicComboBox}" SelectedIndex="0">
+                                    <ComboBoxItem Content="HTTP Web Management (Port 80)"/>
+                                    <ComboBoxItem Content="HTTPS Secure Web (Port 443)"/>
+                                    <ComboBoxItem Content="Telnet CLI Management (Port 23)"/>
+                                    <ComboBoxItem Content="SSH Secure Shell (Port 22)"/>
+                                    <ComboBoxItem Content="SNMP v1 / v2c / v3 Agent"/>
+                                </ComboBox>
+
+                                <TextBlock Grid.Row="0" Grid.Column="3" Text="Session Timeout:" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="0" Grid.Column="4" Text="15 min" Style="{DynamicResource ClassicTextBox}"/>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ================= TAB 3: PORT CONFIGURATION ================= -->
+            <TabItem Header="Port Configuration" Style="{DynamicResource ClassicPropertySheetTabItem}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <Grid Margin="8" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <!-- Port Tree Hierarchy -->
+                        <ColumnDefinition Width="210"/>
+                        <ColumnDefinition Width="8"/>
+                        <!-- Port Settings Form -->
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left: TreeView -->
+                    <GroupBox Grid.Column="0" Header="Device Interfaces" Style="{DynamicResource ClassicGroupBox}">
+                        <TreeView Style="{DynamicResource ClassicTreeView}" BorderThickness="0" Margin="2">
+                            <TreeViewItem Header="DGS-1210-20 (Switch)" IsExpanded="True" Style="{DynamicResource ClassicTreeViewItem}">
+                                <TreeViewItem Header="Port 1 (1G Uplink - Active)" IsSelected="True" Style="{DynamicResource ClassicTreeViewItem}"/>
+                                <TreeViewItem Header="Port 2 (1G Workstation)" Style="{DynamicResource ClassicTreeViewItem}"/>
+                                <TreeViewItem Header="Port 3 (1G Server Link)" Style="{DynamicResource ClassicTreeViewItem}"/>
+                                <TreeViewItem Header="Port 4 (100M Printer)" Style="{DynamicResource ClassicTreeViewItem}"/>
+                                <TreeViewItem Header="Ports 5 - 16 (FastEthernet)" Style="{DynamicResource ClassicTreeViewItem}"/>
+                                <TreeViewItem Header="Ports 17 - 20 (SFP Fiber Combo)" Style="{DynamicResource ClassicTreeViewItem}"/>
+                            </TreeViewItem>
+                        </TreeView>
+                    </GroupBox>
+
+                    <!-- Right: Selected Port Parameters -->
+                    <GroupBox Grid.Column="2" Header="Port 1 Configuration" Style="{DynamicResource ClassicGroupBox}" HorizontalAlignment="Stretch">
+                        <StackPanel Margin="6,4">
+                            <Grid Margin="0,0,0,8" HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="145"/>
+                                    <ColumnDefinition Width="*" MinWidth="200"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="26"/>
+                                    <RowDefinition Height="26"/>
+                                    <RowDefinition Height="26"/>
+                                    <RowDefinition Height="26"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Port State -->
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Port Administrative State:" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource ClassicComboBox}" SelectedIndex="0">
+                                    <ComboBoxItem Content="Enabled (Port Active)"/>
+                                    <ComboBoxItem Content="Disabled (Port Shut Down)"/>
+                                </ComboBox>
+
+                                <!-- Speed / Duplex -->
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Speed / Duplex:" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource ClassicComboBox}" SelectedIndex="0">
+                                    <ComboBoxItem Content="Auto-Negotiation (1000M Full)"/>
+                                    <ComboBoxItem Content="1000M Full Duplex"/>
+                                    <ComboBoxItem Content="100M Full Duplex"/>
+                                    <ComboBoxItem Content="100M Half Duplex"/>
+                                    <ComboBoxItem Content="10M Full Duplex"/>
+                                </ComboBox>
+
+                                <!-- Flow Control -->
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Flow Control (802.3x):" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource ClassicComboBox}" SelectedIndex="0">
+                                    <ComboBoxItem Content="Enabled"/>
+                                    <ComboBoxItem Content="Disabled"/>
+                                </ComboBox>
+
+                                <!-- VLAN Mode -->
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Default VLAN (PVID):" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource ClassicComboBox}" SelectedIndex="0">
+                                    <ComboBoxItem Content="VID 1 (Default Management VLAN)"/>
+                                    <ComboBoxItem Content="VID 10 (Voice Network)"/>
+                                    <ComboBoxItem Content="VID 20 (Guest Wi-Fi)"/>
+                                    <ComboBoxItem Content="VID 30 (Servers)"/>
+                                </ComboBox>
+                            </Grid>
+
+                            <!-- Port Checkboxes -->
+                            <StackPanel Margin="0,4,0,0">
+                                <CheckBox Content="Broadcast Storm Control (Rate Limit: 64 Kbps)"
+                                          IsChecked="True"
+                                          Style="{DynamicResource ClassicCheckBox}"
+                                          HorizontalAlignment="Left"
+                                          Margin="0,0,0,6"/>
+                                <CheckBox Content="Port Security (Sticky MAC Address Learning)"
+                                          IsChecked="True"
+                                          Style="{DynamicResource ClassicCheckBox}"
+                                          HorizontalAlignment="Left"
+                                          Margin="0,0,0,6"/>
+                                <CheckBox Content="IGMP Snooping Fast Leave"
+                                          IsChecked="False"
+                                          Style="{DynamicResource ClassicCheckBox}"
+                                          HorizontalAlignment="Left"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <!-- ================= TAB 4: RESOURCES & ACTIONS ================= -->
+            <TabItem Header="Resources &amp; Diagnostics" Style="{DynamicResource ClassicPropertySheetTabItem}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!-- Left: Telemetry & Power -->
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <!-- Right: Diagnostics & Maintenance -->
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Left Column: Hardware Resource Monitors + PoE Budget -->
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- GroupBox: Hardware Utilization -->
+                            <GroupBox Grid.Row="0" Header="Hardware Resource Monitors" Style="{DynamicResource ClassicGroupBox}" Margin="0,0,0,8">
+                                <Grid Margin="6,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="42"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="24"/>
+                                        <RowDefinition Height="24"/>
+                                        <RowDefinition Height="24"/>
+                                        <RowDefinition Height="24"/>
+                                        <RowDefinition Height="24"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- CPU (Blue) -->
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="CPU Utilization:" VerticalAlignment="Center"/>
+                                    <ProgressBar Grid.Row="0" Grid.Column="1" Value="28" Maximum="100" Style="{DynamicResource ClassicProgressBarBlue}" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="2" Text="28%" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#105C9A"/>
+
+                                    <!-- Memory (Yellow / Amber) -->
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="RAM Memory Usage:" VerticalAlignment="Center"/>
+                                    <ProgressBar Grid.Row="1" Grid.Column="1" Value="64" Maximum="100" Style="{DynamicResource ClassicProgressBarYellow}" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="64%" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#A37100"/>
+
+                                    <!-- Flash (Red) -->
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Flash Storage:" VerticalAlignment="Center"/>
+                                    <ProgressBar Grid.Row="2" Grid.Column="1" Value="85" Maximum="100" Style="{DynamicResource ClassicProgressBarRed}" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="2" Text="85%" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#9E1818"/>
+
+                                    <!-- Buffer / Throughput (Green) -->
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Packet Buffer Load:" VerticalAlignment="Center"/>
+                                    <ProgressBar Grid.Row="3" Grid.Column="1" Value="32" Maximum="100" Style="{DynamicResource ClassicProgressBar}" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="2" Text="32%" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#1C7D10"/>
+
+                                    <!-- Switching Fabric -->
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Switch Fabric Load:" VerticalAlignment="Center"/>
+                                    <ProgressBar Grid.Row="4" Grid.Column="1" Value="14" Maximum="100" Style="{DynamicResource ClassicProgressBarBlue}" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="2" Text="14%" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#105C9A"/>
+                                </Grid>
+                            </GroupBox>
+
+                            <!-- GroupBox: PoE Power Calibration -->
+                            <GroupBox Grid.Row="1" Header="PoE Power Delivery Calibration" Style="{DynamicResource ClassicGroupBox}">
+                                <StackPanel Margin="6,4">
+                                    <Grid Margin="0,0,0,6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="65"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Power Budget Limit:" VerticalAlignment="Center"/>
+                                        <Slider Grid.Column="1" Minimum="10" Maximum="100" Value="75" Style="{DynamicResource ClassicSlider}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="75% (140W)" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    </Grid>
+                                    <Grid Margin="0,0,0,6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Power Priority Mode:" VerticalAlignment="Center"/>
+                                        <ComboBox Grid.Column="1" Style="{DynamicResource ClassicComboBox}" SelectedIndex="0">
+                                            <ComboBoxItem Content="Equal Sharing Across Ports"/>
+                                            <ComboBoxItem Content="Strict Priority (Critical First)"/>
+                                        </ComboBox>
+                                    </Grid>
+                                    <CheckBox Content="Enable PoE Auto-KeepAlive Ping Heartbeat" IsChecked="True" Style="{DynamicResource ClassicCheckBox}"/>
+                                </StackPanel>
+                            </GroupBox>
+                        </Grid>
+
+                        <!-- Right Column: Diagnostics Tools + Maintenance Actions -->
+                        <Grid Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- GroupBox: Diagnostic Utilities -->
+                            <GroupBox Grid.Row="0" Header="Network Diagnostic Utilities" Style="{DynamicResource ClassicGroupBox}" Margin="0,0,0,8">
+                                <StackPanel Margin="6,4">
+                                    <Grid Margin="0,0,0,6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Ping Target:" VerticalAlignment="Center"/>
+                                        <TextBox Grid.Column="1" Text="192.168.1.1" Style="{DynamicResource ClassicTextBox}" Margin="0,0,6,0"/>
+                                        <Button Grid.Column="2" Style="{DynamicResource ClassicStandardButton}" Padding="8,2" Click="OnPingTestClicked">
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <Rectangle Width="12" Height="12" Fill="{DynamicResource IconSearch}" Margin="0,0,4,0"/>
+                                                <TextBlock Text="Ping" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+                                    <Grid Margin="0,0,0,6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Port Cable TDR:" VerticalAlignment="Center"/>
+                                        <ComboBox Grid.Column="1" Style="{DynamicResource ClassicComboBox}" SelectedIndex="0">
+                                            <ComboBoxItem Content="Port 1 (Pair OK - ~24m Cat6)"/>
+                                            <ComboBoxItem Content="Port 2 (Pair OK - ~18m Cat5e)"/>
+                                            <ComboBoxItem Content="Port 3 (Pair OK - ~8m Cat6A)"/>
+                                            <ComboBoxItem Content="Port 4 (Link Down / Unplugged)"/>
+                                        </ComboBox>
+                                    </Grid>
+                                    <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                        <Rectangle Width="8" Height="8" Fill="{DynamicResource IconStatusOnline}" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Cable Diagnostics: All 4 pairs terminated properly" Foreground="{DynamicResource ClassicTextSubtitle}" FontSize="10"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <!-- GroupBox: System Maintenance Tools -->
+                            <GroupBox Grid.Row="1" Header="Quick Maintenance &amp; Configuration" Style="{DynamicResource ClassicGroupBox}">
+                                <Grid Margin="6,4">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Grid.Row="0" Grid.Column="0" Style="{DynamicResource ClassicStandardButton}" Margin="0,0,4,6" Padding="6,4" Click="OnSaveClicked">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Rectangle Width="13" Height="13" Fill="{DynamicResource IconSave}" Margin="0,0,4,0"/>
+                                            <TextBlock Text="Save to NVRAM" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button Grid.Row="0" Grid.Column="1" Style="{DynamicResource ClassicStandardButton}" Margin="4,0,0,6" Padding="6,4" Click="OnCloseClicked">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Rectangle Width="13" Height="13" Fill="{DynamicResource IconRefresh}" Margin="0,0,4,0"/>
+                                            <TextBlock Text="Reload Defaults" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button Grid.Row="1" Grid.Column="0" Style="{DynamicResource ClassicStandardButton}" Margin="0,0,4,6" Padding="6,4" Click="OnSaveClicked">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Rectangle Width="13" Height="13" Fill="{DynamicResource IconExportLog}" Margin="0,0,4,0"/>
+                                            <TextBlock Text="Export Config" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button Grid.Row="1" Grid.Column="1" Style="{DynamicResource ClassicStandardButton}" Margin="4,0,0,6" Padding="6,4" Click="OnCloseClicked">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Rectangle Width="13" Height="13" Fill="{DynamicResource IconReboot}" Margin="0,0,4,0"/>
+                                            <TextBlock Text="Soft Reboot" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="All configuration changes will persist across warm reboots upon saving."
+                                               Foreground="{DynamicResource ClassicTextSubtitle}" FontSize="10" TextWrapping="Wrap" Margin="2,4,2,0"/>
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- Bottom Action Buttons Bar -->
+        <Grid Grid.Row="1" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <!-- Status icon and text -->
+                <Rectangle Width="10" Height="10" Fill="{DynamicResource IconStatusOnline}" Margin="4,0,6,0"/>
+                <TextBlock Text="Status: Connected (Link Speed: 1000M Full)" Foreground="#335577" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button Content="OK"
+                        Style="{DynamicResource ClassicDefaultButton}"
+                        Width="75"
+                        Click="OnCloseClicked"
+                        Margin="0,0,8,0"/>
+                <Button Content="Cancel"
+                        Style="{DynamicResource ClassicStandardButton}"
+                        Width="75"
+                        Click="OnCloseClicked"
+                        Margin="0,0,8,0"/>
+                <Button Content="Apply"
+                        Style="{DynamicResource ClassicStandardButton}"
+                        Width="75"
+                        Click="OnCloseClicked"/>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>

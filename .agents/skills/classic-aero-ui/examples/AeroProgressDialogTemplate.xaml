@@ -1,0 +1,115 @@
+<Window x:Class="ClassicAeroStudio.Views.AeroProgressDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Device Configuration Sync"
+        Icon="pack://application:,,,/Assets/app_icon.png"
+        Height="210" Width="470"
+        MinHeight="200" MinWidth="450"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Background="{DynamicResource ClassicCardBackground}"
+        FontFamily="Segoe UI, Tahoma, sans-serif"
+        FontSize="11"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        TextOptions.TextHintingMode="Fixed"
+        RenderOptions.ClearTypeHint="Enabled">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- 1. Progress Content -->
+            <RowDefinition Height="*"/>
+            <!-- 2. Command Bar Footer -->
+            <RowDefinition Height="46"/>
+        </Grid.RowDefinitions>
+
+        <!-- 1. Upper Progress Content -->
+        <Grid Grid.Row="0" Margin="20,18,20,14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 32x32 Action Icon -->
+            <Rectangle x:Name="IconProgress"
+                       Width="32" Height="32"
+                       Fill="{DynamicResource IconFirmwareUpgrade}"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="0,2,16,0"/>
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock x:Name="TxtHeader"
+                           Text="Writing Configuration to Device..."
+                           FontFamily="Segoe UI"
+                           FontSize="12.5"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource ClassicTextTitle}"
+                           Margin="0,0,0,4"/>
+
+                <TextBlock x:Name="TxtSubHeader"
+                           Text="Please wait while settings are serialized and committed to NVRAM."
+                           FontFamily="Segoe UI"
+                           FontSize="11"
+                           Foreground="{DynamicResource ClassicTextBody}"
+                           Margin="0,0,0,10"/>
+
+                <!-- Animated Classic Aero ProgressBar -->
+                <ProgressBar x:Name="ProgressBarCtrl"
+                             Style="{StaticResource ClassicProgressBar}"
+                             Height="16"
+                             Value="45"
+                             Maximum="100"
+                             Margin="0,0,0,6"/>
+
+                <!-- Progress Details & Percent readout -->
+                <Grid>
+                    <TextBlock x:Name="TxtDetail"
+                               Text="Writing sector block 18 of 40 (checksum ok)..."
+                               FontFamily="Segoe UI"
+                               FontSize="10.5"
+                               Foreground="{DynamicResource ClassicTextSubtitle}"
+                               HorizontalAlignment="Left"/>
+
+                    <TextBlock x:Name="TxtPercent"
+                               Text="45%"
+                               FontFamily="Segoe UI"
+                               FontSize="10.5"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource ClassicTextTitle}"
+                               HorizontalAlignment="Right"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <!-- 2. Bottom Command Bar -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource ClassicCanvasBackground}"
+                BorderBrush="{DynamicResource ClassicDividerBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="16,0"
+                SnapsToDevicePixels="True">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center">
+                <Button x:Name="BtnBackground"
+                        Content="Run in Background"
+                        Style="{StaticResource ClassicStandardButton}"
+                        Width="135"
+                        Height="24"
+                        Margin="0,0,8,0"
+                        Click="OnBackgroundClicked"/>
+
+                <Button x:Name="BtnCancel"
+                        Content="Cancel"
+                        Style="{StaticResource ClassicStandardButton}"
+                        Width="75"
+                        Height="24"
+                        Click="OnCancelClicked"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

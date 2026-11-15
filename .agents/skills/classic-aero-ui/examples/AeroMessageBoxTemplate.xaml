@@ -1,0 +1,100 @@
+<Window x:Class="ClassicAeroStudio.Views.AeroMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Network Assistant"
+        Icon="pack://application:,,,/Assets/app_icon.png"
+        Width="440" MinWidth="360" MaxWidth="580"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Background="#FFFFFF"
+        FontFamily="Segoe UI, Tahoma, sans-serif"
+        FontSize="11"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        TextOptions.TextHintingMode="Fixed"
+        RenderOptions.ClearTypeHint="Enabled">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- 1. Main Message Area (White) -->
+            <RowDefinition Height="Auto"/>
+            <!-- 2. Command Bar Footer (Classic Aero Gray) -->
+            <RowDefinition Height="46"/>
+        </Grid.RowDefinitions>
+
+        <!-- 1. Upper Content -->
+        <Grid Grid.Row="0" Margin="20,18,20,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 32x32 Vector Icon -->
+            <Rectangle x:Name="IconRect"
+                       Width="32" Height="32"
+                       Fill="{DynamicResource IconAlarmInfo}"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="0,0,16,0"/>
+
+            <!-- Message Text Stack -->
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock x:Name="TxtMainInstruction"
+                           Text="Instruction Header"
+                           FontFamily="Segoe UI"
+                           FontSize="12.5"
+                           FontWeight="SemiBold"
+                           Foreground="#003399"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,6"/>
+
+                <TextBlock x:Name="TxtContent"
+                           Text="Detailed description and explanation text goes here."
+                           FontFamily="Segoe UI"
+                           FontSize="11"
+                           Foreground="#222222"
+                           TextWrapping="Wrap"
+                           LineHeight="16"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- 2. Bottom Command Bar -->
+        <Border Grid.Row="1"
+                Background="#F0F0F0"
+                BorderBrush="#DFDFDF"
+                BorderThickness="0,1,0,0"
+                Padding="16,0"
+                SnapsToDevicePixels="True">
+            <StackPanel x:Name="ButtonsPanel"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center">
+                <Button x:Name="Btn1"
+                        Content="OK"
+                        Style="{StaticResource ClassicDefaultButton}"
+                        IsDefault="True"
+                        Width="75" Height="24"
+                        Margin="0,0,8,0"
+                        Click="OnBtn1Clicked"/>
+
+                <Button x:Name="Btn2"
+                        Content="Cancel"
+                        Style="{StaticResource ClassicStandardButton}"
+                        IsCancel="True"
+                        Width="75" Height="24"
+                        Margin="0,0,8,0"
+                        Click="OnBtn2Clicked"/>
+
+                <Button x:Name="Btn3"
+                        Content="Apply"
+                        Style="{StaticResource ClassicStandardButton}"
+                        Width="75" Height="24"
+                        Click="OnBtn3Clicked"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

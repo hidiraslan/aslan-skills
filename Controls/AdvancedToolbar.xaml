@@ -1,0 +1,181 @@
+<UserControl x:Class="ClassicAeroStudio.Controls.AdvancedToolbar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="70" d:DesignWidth="750">
+    <Border Style="{DynamicResource ClassicRibbonBandStyle}" Height="72" Padding="6,3,6,5" SnapsToDevicePixels="True" UseLayoutRounding="True">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            
+            <!-- 1. Batch Firmware -->
+            <Button x:Name="BtnBatchFirmware"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    ToolTip="Deploy Firmware Upgrade to Multiple Selected Devices Simultaneously">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconFirmwareUpgrade}"/>
+                    <TextBlock Text="Batch&#x0a;Firmware"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 2. Batch Config -->
+            <Button x:Name="BtnBatchConfig"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    ToolTip="Push Configuration Script / Profile Across Multiple Devices">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconBackupRestore}"/>
+                    <TextBlock Text="Batch&#x0a;Config"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 3. Batch IP Setup -->
+            <Button x:Name="BtnBatchIP"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    ToolTip="Batch IP Address Assignment &amp; Subnet Renumbering">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconPort}"/>
+                    <TextBlock Text="Batch IP&#x0a;Setup"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Group Separator -->
+            <Separator Style="{DynamicResource RibbonGroupSeparator}"/>
+
+            <!-- 4. VLAN Setup -->
+            <Button x:Name="BtnVlanSetup"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    ToolTip="802.1Q VLAN Tagging &amp; Trunk Port Management">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconVLAN}"/>
+                    <TextBlock Text="VLAN&#x0a;Setup"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 5. Port Mirroring -->
+            <Button x:Name="BtnPortMirror"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    ToolTip="Configure Traffic Mirroring (SPAN Port) for Packet Analysis">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconSearch}"/>
+                    <TextBlock Text="Port&#x0a;Mirror"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 6. Syslog Monitor -->
+            <Button x:Name="BtnSyslog"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    ToolTip="Real-Time Network Events &amp; SNMP Trap Listener">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconAlerts}"/>
+                    <TextBlock Text="Syslog&#x0a;Monitor"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Group Separator -->
+            <Separator Style="{DynamicResource RibbonGroupSeparator}"/>
+
+            <!-- 7. IP Range Scan -->
+            <Button x:Name="BtnIpScan"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    ToolTip="Scan Custom IP Subnet Range with Ping &amp; ARP">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconDiscovery}"/>
+                    <TextBlock Text="IP Range&#x0a;Scan"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 8. Factory Wipe -->
+            <Button x:Name="BtnFactoryWipe"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    ToolTip="Mass Factory Reset &amp; NVRAM Wipe for Multiple Devices">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconReset}"/>
+                    <TextBlock Text="Factory&#x0a;Wipe"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               LineHeight="11"
+                               LineStackingStrategy="BlockLineHeight"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 9. Settings -->
+            <Button x:Name="BtnSettings"
+                    Style="{DynamicResource ClassicRibbonButton}"
+                    Click="OnSettingsClicked"
+                    ToolTip="Advanced Discovery Preferences and Options">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="24" Height="24"
+                               Margin="0,0,0,2"
+                               Fill="{DynamicResource IconSettings}"/>
+                    <TextBlock Text="Settings"
+                               FontSize="10"
+                               FontFamily="Segoe UI"
+                               TextAlignment="Center"
+                               Margin="0,4,0,0"
+                               Foreground="{DynamicResource ClassicTextTitle}"/>
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+    </Border>
+</UserControl>

@@ -1,0 +1,41 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Vertical separator line between ribbon groups -->
+    <Style x:Key="RibbonGroupSeparator" TargetType="Separator">
+        <Setter Property="Width" Value="2"/>
+        <Setter Property="Height" Value="56"/>
+        <Setter Property="Margin" Value="4,4,4,4"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Separator">
+                    <Grid Width="2" Height="{TemplateBinding Height}">
+                        <!-- Dark side of separator -->
+                        <Rectangle Width="1" HorizontalAlignment="Left" Fill="#CAD9E8"/>
+                        <!-- Light highlight side of separator -->
+                        <Rectangle Width="1" HorizontalAlignment="Right" Fill="#FFFFFF"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Ribbon Background Container -->
+    <Style x:Key="ClassicRibbonBandStyle" TargetType="Border">
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="BorderBrush" Value="#A0B4D0"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#FFFFFF" Offset="0.0"/>
+                    <GradientStop Color="#F8FAFC" Offset="0.3"/>
+                    <GradientStop Color="#EDF3F9" Offset="0.7"/>
+                    <GradientStop Color="#E4ECF5" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
