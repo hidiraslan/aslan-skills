@@ -2,17 +2,34 @@
 
 # 💎 Classic Aero UI Studio
 
-**A Windows 7 Classic Aero and Dark Aero design system for WPF, packaged as an installable skill for AI coding agents.**
+### *Tired of generic, low-density AI-generated flat web dashboards?*
+**The High-Density, Tactile Enterprise Design System for WPF & AI Coding Agents.**
 
-Pure XAML and C# · No third-party UI packages · 67 vector icons · Light and Dark themes
+*"Stop building desktop apps that look like flat, pastel mobile web templates. Bring back real depth, crystal-clear Aero gloss, tactile precision, and true enterprise data density to modern .NET desktop software."*
+
+**Pure XAML &amp; C#** · **Zero NuGet Dependencies** · **Extensible Vector Icon Engine** · **Dual Light &amp; Dark Aero Themes** · **Engineered for .NET 10**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 [![.NET 10](https://img.shields.io/badge/.NET-10-512BD4?style=flat-square&logo=dotnet)](ClassicAeroStudio.csproj)
 [![WPF](https://img.shields.io/badge/UI-WPF-0078D7?style=flat-square)](#-whats-included)
 [![Dependencies](https://img.shields.io/badge/NuGet%20dependencies-0-238636?style=flat-square)](ClassicAeroStudio.csproj)
+[![Icon Engine](https://img.shields.io/badge/Vector%20Icon%20Engine-Extensible%20DNA-007ACC?style=flat-square)](#-whats-included)
 [![AI Agents](https://img.shields.io/badge/Agents-Antigravity%20%7C%20Codex%20%7C%20Claude%20Code%20%7C%20Cursor-388BFD?style=flat-square)](#-use-it-with-an-ai-agent)
 
+<br/>
+
 <img src="docs/screenshots/theme_comparison.gif" alt="Light Aero and Dark Aero theme switching" width="860">
+
+<br/>
+
+### ⚡ Why Classic Aero?
+
+| 🚫 The "Flat AI" Dilemma | ✨ The Classic Aero Solution |
+| :--- | :--- |
+| **Soulless pastel templates** that look like generic SaaS web apps | **Skeuomorphic crystal depth**, Aero gradients &amp; tactile realism |
+| **Massive 48px paddings** wasting valuable desktop screen estate | **High-density 24px rows**, balanced controls &amp; maximum telemetry per pixel |
+| **Dependency hell** (heavy third-party packages, DLL conflicts, breaking updates) | **Zero external dependencies** — 100% native, ultra-fast pure WPF XAML &amp; C# |
+| **Inconsistent icon sets** mixing emojis, raster PNGs, and disparate SVG styles | **Extensible Vector Icon Engine** with strict Aero DNA rules for infinite expansion |
 
 </div>
 
@@ -51,7 +68,7 @@ AI coding assistants tend to produce the same generic flat dashboard: large padd
 | Part | Location | Description |
 | :--- | :--- | :--- |
 | Theme dictionaries | `Themes/` | 15 XAML resource dictionaries: Light master theme, Dark Aero theme and per-control styles |
-| Vector icons | `Assets/Icons/ClassicIcons.xaml` | 67 `DrawingBrush` icons, resolution independent |
+| Vector Icon Engine | `Assets/Icons/ClassicIcons.xaml`, `references/` | Extensible vector icon system &amp; design guidelines for infinite, style-consistent icon creation |
 | Theme manager | `Services/ThemeManager.cs` | Runtime Light/Dark switching and dark title bar via DWM |
 | Demo application | `Views/`, `Controls/` | Dashboard, Explorer / MMC / Studio shells, settings windows, dialogs, wizard |
 | Agent skill | `.agents/skills/classic-aero-ui/` | `SKILL.md`, reference guides, XAML templates and `install.ps1` |
