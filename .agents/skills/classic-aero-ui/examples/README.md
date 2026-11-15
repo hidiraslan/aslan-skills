@@ -230,8 +230,12 @@ The full rule set lives in [`AGENTS.md`](AGENTS.md) and [`.agents/skills/classic
 
 ## ▶️ Run the demo app
 
-Requires the .NET 10 SDK on Windows.
+Requires Windows and the .NET 10 SDK or Desktop Runtime.
 
+### Option A: One-Click Launcher
+Simply double-click **`Launch-Demo.bat`** in the repository root to start the studio immediately.
+
+### Option B: Terminal (.NET CLI)
 ```powershell
 git clone https://github.com/hidiraslan/aslan-skills.git
 cd aslan-skills
