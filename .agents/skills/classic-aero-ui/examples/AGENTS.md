@@ -31,3 +31,13 @@ When working on this project or whenever the `classic-aero-ui` design system is 
    - Synthesize using 1px borders, subtle 2-4px corner radii, cylindrical top-to-bottom Aero gradients, Segoe UI typography hierarchy, and DrawingBrush vector icons. Never fall back to flat modern styles.
 7. **Global Menu & TreeView Behavior:**
    - Enforce zero menu hover auto-open (top-level menus require an explicit click to open; hovering over adjacent sibling menus while open never auto-opens them) and zero horizontal jump on TreeView selection via global class handlers registered in `App.xaml.cs`.
+8. **Application Icon Strategy (Domain-Aware Selection & Synthesis):**
+   - **Existing Icon Preservation:** If the target project already has an application icon (`.ico`, `.png`, or `<ApplicationIcon>` in `.csproj`), **PRESERVE IT**. Never overwrite existing project branding.
+   - **Domain-Aware Semantic Selection:** When configuring or generating an icon, analyze the application's actual domain/type instead of using a generic placeholder:
+     * *Database & Data Tools:* Choose or synthesize a crystal database/storage emblem (`IconDatabase`).
+     * *Developer & Code Tools:* Choose or synthesize code brackets or terminal emblem (`IconCode`, `IconTerminal`).
+     * *Security, VPN & Vaults:* Choose or synthesize a crystal shield, lock, or key badge (`IconShield`, `IconKey`).
+     * *Media, Audio & Graphics:* Choose or synthesize waveform, play disc, or palette badge.
+     * *Analytics & Financial Systems:* Choose or synthesize chart, sparkline, or telemetry gemstone (`IconAnalytics`, `IconChart`).
+     * *System Utilities & General Software:* Use the neutral Classic Aero Crystal Diamond emblem (`IconAppLogo` / `Assets/app_icon.ico`).
+   - **Strict Letter Icon Prohibition:** NEVER use a placeholder lettered icon (such as a legacy "D" icon) unless the program name specifically starts with that letter and the user explicitly requests an initial/monogram icon. Use the Vector Icon Creation Guide (`references/icon-creation-guide.md`) to synthesize matching Aero vector icons for any new domain.

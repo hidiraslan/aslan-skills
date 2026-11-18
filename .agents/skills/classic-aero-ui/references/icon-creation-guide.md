@@ -104,3 +104,14 @@ Oluşturulan her ikon XAML içinde doğrudan şu boyut standartlarıyla çağrı
 <!-- 48x48: Yüksek Çözünürlüklü Dokunmatik / Karşılama Kartı -->
 <Rectangle Width="48" Height="48" Fill="{DynamicResource Icon[OrnekAdi]}"/>
 ```
+
+---
+
+## 5. Uygulama Ana İkonu (Application Favicon & Logo) Standartları
+
+1. **Rastgele Harflerden Kaçının:** Kullanıcı özel bir monogram/baş harf logosu istemedikçe asla "D", "A" gibi rastgele harf içeren statik ikonlar kullanılmaz.
+2. **Program Türüne Göre Semantik Amblem:**
+   - Uygulamanın alanına göre sembol seçilir: Veritabanı için kristal silindir/veri amblemi, Güvenlik için Aero kalkan/anahtar, Kodlama için terminal/parantez amblemi, Medya için ses dalgası/disk.
+3. **Genel Kurumsal Standart:**
+   - Özel bir alan belirtilmemişse veya genel masaüstü aracı ise nötr **Classic Aero Crystal Diamond** (3D Aero kristal cam pencere amblemi `IconAppLogo`) kullanılır.
+4. **Vektör Üretim Şablonu:** Yeni uygulama ikonları dışta koyu 3D bevel, içte silindirik Aero cam gradyanı ve üstte hilal yansıması (specular arc) taşıyarak Windows 7 kristal cam derinliğini tam yansıtmalıdır.

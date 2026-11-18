@@ -99,11 +99,11 @@ protected override void OnStartup(StartupEventArgs e)
 }
 ```
 
-### Step 3: Configure Root Window Properties
+### Step 3: Configure Root Window Properties & Application Icon
 Every Window (`MainWindow`, Dialog, Settings, Wizard) MUST declare these exact rendering attributes:
 ```xml
 <Window ...
-        Icon="pack://application:,,,/Assets/app_icon.png"
+        Icon="pack://application:,,,/Assets/app_icon.ico"
         FontFamily="Segoe UI, Tahoma, sans-serif"
         FontSize="11"
         Background="#F4F6F9"
@@ -114,6 +114,18 @@ Every Window (`MainWindow`, Dialog, Settings, Wizard) MUST declare these exact r
         TextOptions.TextHintingMode="Fixed"
         RenderOptions.ClearTypeHint="Enabled">
 ```
+
+> [!IMPORTANT]
+> **Domain-Aware Application Icon Selection (Program Türüne Göre İkon Seçimi):**
+> 1. **Preserve Existing Icon:** If the target project already has an application icon, **PRESERVE IT**. Never overwrite existing project branding.
+> 2. **Domain-Specific Icon Assignment:** Analyze what kind of application is being built and select a semantically matching icon from `ClassicIcons.xaml`:
+>    - *Database & Data Tools:* `IconDatabase`, `IconStorage`, `IconServer`
+>    - *Developer & Code Tools:* `IconCode`, `IconTerminal`, `IconStudio`
+>    - *Security, VPN & Vaults:* `IconShield`, `IconKey`, `IconLock`
+>    - *Media, Audio & Entertainment:* `IconAudio`, `IconPlay`
+>    - *Analytics & Telemetry:* `IconAnalytics`, `IconChart`
+>    - *General Desktop Utility:* Use the neutral Classic Aero Crystal Diamond emblem (`IconAppLogo` / `Assets/app_icon.ico`).
+> 3. **Strict Lettered Icon Prohibition:** NEVER use a hardcoded lettered icon (such as a legacy "D" icon) unless the program name specifically starts with that letter and the user explicitly requests an initial/monogram icon. Use the Vector Icon Creation Guide (`references/icon-creation-guide.md`) to synthesize matching Aero vector icons for any new domain.
 
 ### Step 4: Drop In Ready Templates
 - **Main Shell:** Use `examples/MainWindowTemplate.xaml`

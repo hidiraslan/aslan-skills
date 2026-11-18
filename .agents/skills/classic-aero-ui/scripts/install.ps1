@@ -46,11 +46,12 @@ foreach ($file in $ThemeFiles) {
 Write-Host "--> Copying Icons to $IconsDir..." -ForegroundColor Green
 Copy-Item -Path (Join-Path $ExamplesDir "ClassicIcons.xaml") -Destination $IconsDir -Force
 
-if (Test-Path (Join-Path $ExamplesDir "app_icon.png")) {
-    Copy-Item -Path (Join-Path $ExamplesDir "app_icon.png") -Destination $AssetsDir -Force
+# Copy neutral Aero crystal icon only if project does not already have an application icon
+if (-not (Test-Path (Join-Path $AssetsDir "app_icon.png")) -and (Test-Path (Join-Path $ExamplesDir "app_icon.png"))) {
+    Copy-Item -Path (Join-Path $ExamplesDir "app_icon.png") -Destination $AssetsDir
 }
-if (Test-Path (Join-Path $ExamplesDir "app_icon.ico")) {
-    Copy-Item -Path (Join-Path $ExamplesDir "app_icon.ico") -Destination $AssetsDir -Force
+if (-not (Test-Path (Join-Path $AssetsDir "app_icon.ico")) -and (Test-Path (Join-Path $ExamplesDir "app_icon.ico"))) {
+    Copy-Item -Path (Join-Path $ExamplesDir "app_icon.ico") -Destination $AssetsDir
 }
 
 # 4. Copy Services (ThemeManager.cs)
